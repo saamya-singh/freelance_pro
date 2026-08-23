@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FreelancerLedger India</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#000cd8",
+                        "background": "#fcf9f8",
+                        "secondary-fixed-dim": "#a1d820",
+                        "tertiary-container": "#ac2000",
+                        "secondary-container": "#bcf540",
+                        "on-secondary": "#ffffff",
+                        "secondary": "#4a6700",
+                        "surface": "#fcf9f8",
+                        "on-tertiary-container": "#ffc0b3",
+                        "outline": "#757588",
+                        "surface-container": "#f0edec",
+                        "surface-variant": "#e5e2e1",
+                        "surface-bright": "#fcf9f8",
+                        "tertiary-fixed": "#ffdad3",
+                        "on-error": "#ffffff",
+                        "error": "#ba1a1a",
+                        "on-secondary-fixed": "#141f00",
+                        "secondary-fixed": "#bcf540",
+                        "tertiary-fixed-dim": "#ffb4a4",
+                        "primary-container": "#2e3aee",
+                        "outline-variant": "#c5c5d9",
+                        "surface-container-highest": "#e5e2e1",
+                        "inverse-surface": "#313030",
+                        "surface-dim": "#dcd9d9",
+                        "on-primary-fixed-variant": "#101cde",
+                        "on-primary": "#ffffff",
+                        "on-secondary-container": "#4f6e00",
+                        "surface-container-high": "#ebe7e7",
+                        "primary-fixed": "#e0e0ff",
+                        "primary-fixed-dim": "#bec2ff",
+                        "on-background": "#1c1b1b",
+                        "on-surface": "#1c1b1b",
+                        "surface-container-low": "#f6f3f2",
+                        "on-primary-fixed": "#00036b",
+                        "on-tertiary-fixed-variant": "#8c1800",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-primary": "#bec2ff",
+                        "error-container": "#ffdad6",
+                        "inverse-on-surface": "#f3f0ef",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed": "#3d0600",
+                        "on-surface-variant": "#454556",
+                        "on-secondary-fixed-variant": "#374e00",
+                        "on-primary-container": "#c8cbff",
+                        "tertiary": "#811600",
+                        "surface-tint": "#3642f4",
+                        "on-tertiary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "margin-mobile": "20px",
+                        "margin-desktop": "64px",
+                        "sticker-offset": "-8px",
+                        "unit": "4px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["archivoNarrow", "sans-serif"],
+                        "body-lg": ["geist", "sans-serif"],
+                        "headline-lg-mobile": ["archivoNarrow", "sans-serif"],
+                        "body-md": ["geist", "sans-serif"],
+                        "display-lg": ["archivoNarrow", "sans-serif"],
+                        "headline-md": ["archivoNarrow", "sans-serif"],
+                        "label-sm": ["geist", "sans-serif"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["40px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "display-lg": ["72px", { "lineHeight": "72px", "letterSpacing": "-0.04em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "28px", "letterSpacing": "0em", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        /* Grid Background Pattern */
+        .grid-pattern {
+            background-image: 
+                linear-gradient(to right, #75758820 1px, transparent 1px),
+                linear-gradient(to bottom, #75758820 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+
+        /* Hard Shadow for 'Sticker' Depth */
+        .hard-shadow {
+            box-shadow: 4px 4px 0px 0px #1c1b1b;
+        }
+        
+        /* Interactive Button Shadow */
+        .btn-shadow {
+            box-shadow: 4px 4px 0px 0px #1c1b1b;
+            transition: all 0.1s ease;
+        }
+        .btn-shadow:active {
+            box-shadow: 0px 0px 0px 0px #1c1b1b;
+            transform: translate(4px, 4px);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen overflow-x-hidden font-body-md grid-pattern">
+<!-- Top Navigation Anchor (Shared Component: TopAppBar) -->
+<header class="w-full top-0 sticky bg-background border-b border-on-background z-50">
+<div class="flex justify-between items-center px-gutter py-4 w-full max-w-7xl mx-auto">
+<div class="flex items-center gap-4">
+<!-- Leading Avatar placeholder -->
+<div class="w-10 h-10 rounded-full border border-on-background overflow-hidden hard-shadow bg-surface-container">
+<img alt="User profile photo" class="w-full h-full object-cover" data-alt="A small, stylized profile avatar of a confident Indian freelancer. The illustration uses thick black outlines, bold solid blocks of 'Electric Cobalt' and 'Acid Lime', resembling a pop-art zine character on a warm ivory background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZ5KGeVgYOeUJCFpvFITw57_8heM7gLJdZryVYo3KnP9ExL6gKg7z9nBM8O8_6W4qpwo9CJ0mo0dt9CLCv9v6-sklsnBS6rshifSyPMOFjESXHCBeJDnpqOA6AUVH65B8O9tCSXTTSgJCRNzhz7XfTvdXVisR6uofahi06xk2ZGDR3wrqRjfBTBlGrRkiezYpB9XCumXWlN9EyKSflxcyBDrgVp7XADUBB_4K0ucC_S0uPyFY557uY"/>
+</div>
+<h1 class="font-headline-md text-headline-md font-bold text-primary tracking-tighter">FREELANCER.OS</h1>
+</div>
+<div class="hidden md:flex gap-6 items-center">
+<!-- Navigation Tabs -> Suppressed for landing page as per 'Intent Fallback' / 'Linear/Transactional' rule -->
+</div>
+<button class="text-on-background hover:text-secondary transition-colors duration-200 active:translate-y-px">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">notifications</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop pt-12 pb-32">
+<!-- Hero Section: Asymmetric Editorial Layout -->
+<section class="grid grid-cols-4 md:grid-cols-12 gap-gutter mb-24 items-center">
+<!-- Left Text Column -->
+<div class="col-span-4 md:col-span-7 flex flex-col items-start z-10">
+<div class="mb-6 relative">
+<!-- Decorative Sticker -->
+<div class="absolute -top-6 -left-4 bg-secondary-container text-on-secondary-container border border-on-background px-3 py-1 font-label-sm text-label-sm uppercase hard-shadow transform -rotate-3 rounded-full">
+                        New in India
+                    </div>
+<h2 class="font-display-lg text-display-lg text-on-background leading-tight mb-4 hidden md:block">
+                        Do the work.<br/>
+                        Own the numbers.<br/>
+<span class="text-primary italic">Grow with clarity.</span>
+</h2>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-background leading-tight mb-4 md:hidden">
+                        Do the work.<br/>
+                        Own the numbers.<br/>
+<span class="text-primary italic">Grow with clarity.</span>
+</h2>
+</div>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-lg mb-8 border-l-2 border-primary pl-4">
+                    The ledger built for independent professionals who treat their business as a craft. Stop wrestling with corporate software and start building your empire.
+                </p>
+<!-- Primary CTA -->
+<button class="bg-primary text-on-primary font-headline-md text-headline-md px-8 py-4 rounded-full border border-on-background btn-shadow flex items-center gap-2">
+                    Get Started Free
+                    <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+<!-- Right Visual Column (Funky Ledger Abstraction) -->
+<div class="col-span-4 md:col-span-5 relative mt-16 md:mt-0 h-[500px]">
+<!-- Base Frame -->
+<div class="absolute inset-4 bg-surface border border-on-background hard-shadow overflow-hidden rounded-xl">
+<img alt="Ledger Abstract Art" class="w-full h-full object-cover opacity-80" data-alt="An abstract, stylized representation of a financial ledger dashboard. High-contrast shapes, thick charcoal borders, and stark blocks of warm ivory, electric blue, and vibrant lime green. The visual style is a mix of Swiss grid rigidity and playful, zine-inspired sticker overlays. No realistic people, just data visualization re-imagined as pop art." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpLdvwN0O0YUngOuBVwmJxQ0ZoR8Yg1OE6FfAA3RJ9pu3oMLziDat9tBEdg3acFGHnMu4aezHiZTIbgNCZK2HgW0_kiakQrkh5qmk1TLVLEdolJqTG2RQ9xlDL73RJ5LqCd7EL8B4tV8v-IuMHynYYSMU14nAz6Gdp32Q-LlI3-7puunOhIyONfB1LB6gharKvYt84vr-bNhm52zFOfuGztkpXtXxIGIsZzu7xA08n2b3I7uSw2ock"/>
+</div>
+<!-- Floating Sticker 1: Revenue -->
+<div class="absolute top-10 right-0 bg-secondary-fixed text-on-secondary-fixed-variant border border-on-background rounded-full px-6 py-3 font-headline-md text-headline-md hard-shadow transform rotate-2 z-20 flex items-center gap-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">trending_up</span>
+                    ₹4,82,500
+                </div>
+<!-- Floating Sticker 2: Invoice Status -->
+<div class="absolute bottom-20 -left-6 bg-surface text-on-background border border-on-background rounded-xl p-4 hard-shadow transform -rotate-2 z-20">
+<div class="font-label-sm text-label-sm text-on-surface-variant mb-1">Invoice #042</div>
+<div class="font-body-md text-body-md font-bold mb-2">Creative Direction</div>
+<div class="inline-block bg-tertiary-fixed text-on-tertiary-fixed border border-on-background rounded-full px-2 py-0.5 font-label-sm text-label-sm hard-shadow">
+                        Overdue
+                    </div>
+</div>
+<!-- Decorative element -->
+<div class="absolute -bottom-8 right-12 w-24 h-24 bg-primary text-on-primary rounded-full border border-on-background hard-shadow flex items-center justify-center z-10 mix-blend-multiply">
+<span class="material-symbols-outlined text-display-lg" style="font-variation-settings: 'FILL' 0;">bolt</span>
+</div>
+</div>
+</section>
+<!-- Bento Grid Feature Section -->
+<section class="grid grid-cols-4 md:grid-cols-12 gap-gutter">
+<div class="col-span-4 md:col-span-12 mb-8">
+<h3 class="font-headline-lg text-headline-lg hidden md:block">Engineered for Independents</h3>
+<h3 class="font-headline-lg-mobile text-headline-lg-mobile md:hidden">Engineered for Independents</h3>
+</div>
+<!-- Bento Card 1 -->
+<div class="col-span-4 md:col-span-8 bg-surface border border-on-background hard-shadow p-6 rounded-xl flex flex-col justify-between group hover:bg-surface-container transition-colors duration-300">
+<div class="flex justify-between items-start mb-12 border-b border-on-background pb-4">
+<div class="font-headline-md text-headline-md">Smart Invoicing</div>
+<span class="material-symbols-outlined text-primary text-[32px]">receipt_long</span>
+</div>
+<div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">Generate sharp, professional invoices that demand respect and prompt payment. Track statuses at a glance.</p>
+<div class="flex gap-2">
+<span class="bg-secondary-container text-on-secondary-container border border-on-background px-3 py-1 rounded-full font-label-sm text-label-sm">Paid</span>
+<span class="bg-surface text-on-background border border-on-background px-3 py-1 rounded-full font-label-sm text-label-sm">Draft</span>
+</div>
+</div>
+</div>
+<!-- Bento Card 2 -->
+<div class="col-span-4 md:col-span-4 bg-primary text-on-primary border border-on-background hard-shadow p-6 rounded-xl flex flex-col justify-between">
+<div class="flex justify-between items-start mb-8 border-b border-on-primary/30 pb-4">
+<div class="font-headline-md text-headline-md">Tax Ready</div>
+<span class="material-symbols-outlined text-secondary-fixed text-[32px]">account_balance</span>
+</div>
+<p class="font-body-md text-body-md text-on-primary-container">Keep GST sorted and expenses categorized without the headache. Ready for your CA in one click.</p>
+</div>
+</section>
+</main>
+<!-- Bottom Nav Suppressed for landing page intent -->
+</body></html>

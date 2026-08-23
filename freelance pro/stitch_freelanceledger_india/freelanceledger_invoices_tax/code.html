@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FreelanceLedger - Invoices &amp; Tax</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed-variant": "#464747",
+                        "surface-container-highest": "#e2e3de",
+                        "on-secondary-fixed": "#1b1c1c",
+                        "on-tertiary-fixed": "#1b1c17",
+                        "on-primary": "#ffffff",
+                        "on-primary-fixed-variant": "#474646",
+                        "tertiary-container": "#1b1c17",
+                        "secondary-container": "#e1dfdf",
+                        "on-surface-variant": "#444748",
+                        "surface-bright": "#fafaf5",
+                        "on-error-container": "#93000a",
+                        "inverse-primary": "#c8c6c5",
+                        "surface-container": "#eeeee9",
+                        "on-surface": "#1a1c19",
+                        "primary-container": "#1c1b1b",
+                        "surface": "#fafaf5",
+                        "background": "#fafaf5",
+                        "on-secondary-container": "#626262",
+                        "on-primary-fixed": "#1c1b1b",
+                        "secondary-fixed": "#e4e2e2",
+                        "inverse-surface": "#2f312e",
+                        "primary": "#000000",
+                        "surface-container-high": "#e8e8e4",
+                        "outline": "#747878",
+                        "inverse-on-surface": "#f1f1ec",
+                        "secondary": "#5e5e5e",
+                        "surface-tint": "#5f5e5e",
+                        "tertiary-fixed-dim": "#c7c7bf",
+                        "primary-fixed": "#e5e2e1",
+                        "surface-container-low": "#f4f4ef",
+                        "on-tertiary-container": "#84847e",
+                        "surface-dim": "#dadad5",
+                        "on-primary-container": "#858383",
+                        "tertiary": "#000000",
+                        "on-background": "#1a1c19",
+                        "outline-variant": "#c4c7c7",
+                        "on-tertiary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed": "#e4e3db",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed-variant": "#464742",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-fixed-dim": "#c7c6c6",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed-dim": "#c8c6c5",
+                        "error": "#ba1a1a",
+                        "surface-variant": "#e2e3de"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-desktop": "40px",
+                        "margin-mobile": "16px",
+                        "stack-lg": "48px",
+                        "stack-md": "24px",
+                        "container-max": "1280px",
+                        "gutter": "24px",
+                        "stack-sm": "8px",
+                        "unit": "8px"
+                    },
+                    "fontFamily": {
+                        "display-lg-mobile": ["Geist"],
+                        "label-caps": ["Geist"],
+                        "data-metric": ["Geist"],
+                        "headline-md": ["Geist"],
+                        "table-cell": ["Inter"],
+                        "display-lg": ["Geist"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "display-lg-mobile": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-caps": ["12px", { "lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "data-metric": ["36px", { "lineHeight": "1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "table-cell": ["13px", { "lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "400" }],
+                        "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400" }],
+                        "body-md": ["14px", { "lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: theme('colors.background'); color: theme('colors.on-background'); }
+        /* Hide scrollbar for clean editorial look */
+        ::-webkit-scrollbar { width: 0px; background: transparent; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="antialiased min-h-screen flex flex-col md:flex-row font-body-md text-body-md overflow-x-hidden">
+<!-- NavigationDrawer (Desktop) -->
+<aside class="hidden md:flex h-full w-[280px] fixed left-0 top-0 z-50 bg-surface dark:bg-surface-dim border-r border-outline-variant dark:border-outline flex-col py-stack-md px-4 transition-all duration-200 ease-in-out">
+<div class="mb-stack-lg">
+<h1 class="font-display-lg text-display-lg-mobile text-primary tracking-tighter">FreelanceLedger</h1>
+</div>
+<div class="flex items-center gap-3 mb-stack-lg px-2">
+<div class="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a modern Indian freelancer, slightly moody studio lighting against a clean neutral background. Black and white aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDK0YyDbPryKqAOb8KV9vlsGklQSjmW4MqgOX3KNzxqbjwTyZnSWLsR32sBLJoqqaoiIaMAXF8q4PWmEQ8mp_kRgvsbW8QdiQIcEHd76gu9b9tpkHxYr1qVSGG12Luw7DRPrNyDKxXp1XzvrBVFuR7nFuT0nRWb03seFZSI9Gb4vfaiDzfYMomk2I1phZXIgw2y3sYUZ0EX5vmXXLSVeplYEi1_NdExdmnejnUpbuWbPRqoDVzR2ltS"/>
+</div>
+<div>
+<p class="font-bold text-primary dark:text-on-primary-fixed">Ankit Sharma</p>
+<p class="text-secondary dark:text-on-secondary-container text-xs">Pro Freelancer</p>
+<p class="text-primary font-semibold text-xs mt-1">₹12,40,000 YTD</p>
+</div>
+</div>
+<nav class="flex-1 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-DEFAULT text-secondary dark:text-on-secondary-container hover:bg-surface-container-low hover:bg-surface-container-high dark:hover:bg-on-surface-variant/10" href="#">
+<span class="material-symbols-outlined" data-weight="regular">dashboard</span>
+                Dashboard
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-DEFAULT text-secondary dark:text-on-secondary-container hover:bg-surface-container-low hover:bg-surface-container-high dark:hover:bg-on-surface-variant/10" href="#">
+<span class="material-symbols-outlined" data-weight="regular">group</span>
+                Clients
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-DEFAULT bg-primary-container text-on-primary-container font-semibold border-r-2 border-primary" href="#">
+<span class="material-symbols-outlined" data-weight="fill">receipt_long</span>
+                Invoices
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-DEFAULT text-secondary dark:text-on-secondary-container hover:bg-surface-container-low hover:bg-surface-container-high dark:hover:bg-on-surface-variant/10" href="#">
+<span class="material-symbols-outlined" data-weight="regular">account_balance_wallet</span>
+                Tax Central
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-DEFAULT text-secondary dark:text-on-secondary-container hover:bg-surface-container-low hover:bg-surface-container-high dark:hover:bg-on-surface-variant/10" href="#">
+<span class="material-symbols-outlined" data-weight="regular">account_balance</span>
+                Banking
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-DEFAULT text-secondary dark:text-on-secondary-container hover:bg-surface-container-low hover:bg-surface-container-high dark:hover:bg-on-surface-variant/10 mt-auto" href="#">
+<span class="material-symbols-outlined" data-weight="regular">settings</span>
+                Settings
+            </a>
+</nav>
+</aside>
+<!-- TopAppBar (Mobile) -->
+<header class="md:hidden w-full sticky top-0 z-40 bg-background dark:bg-background border-b border-outline-variant dark:border-outline flex items-center justify-between px-margin-mobile h-16">
+<button class="p-2 -ml-2 text-primary dark:text-on-primary-fixed active:opacity-80 transition-opacity">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h1 class="font-display-lg text-[24px] tracking-tighter text-primary dark:text-on-primary-fixed font-bold">FreelanceLedger</h1>
+<button class="p-2 -mr-2 text-primary dark:text-on-primary-fixed active:opacity-80 transition-opacity">
+<span class="material-symbols-outlined">search</span>
+</button>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 md:ml-[280px] w-full max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-stack-md md:py-stack-lg pb-[100px] md:pb-stack-lg">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-stack-lg gap-4">
+<div>
+<h2 class="font-display-lg text-display-lg-mobile md:text-display-lg text-primary tracking-tighter">Invoices</h2>
+<p class="text-secondary mt-2">Manage billing, track statuses, and record payments.</p>
+</div>
+<button class="bg-primary text-on-primary px-6 py-3 rounded-DEFAULT font-label-caps text-label-caps tracking-wider hover:opacity-90 transition-opacity flex items-center gap-2 shrink-0 shadow-[4px_4px_0px_rgba(0,0,0,0.05)]">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                CREATE INVOICE
+            </button>
+</div>
+<!-- Metric Cards Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-stack-lg">
+<!-- Card 1 -->
+<div class="border border-outline-variant bg-surface rounded-DEFAULT p-6 flex flex-col gap-2 relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-[64px]">pending_actions</span>
+</div>
+<span class="font-label-caps text-label-caps text-secondary uppercase">Outstanding</span>
+<span class="font-data-metric text-data-metric text-primary"><span class="text-headline-md text-secondary mr-1">₹</span>4,25,000</span>
+<div class="h-[1px] w-full bg-outline-variant mt-2 mb-2"></div>
+<span class="text-xs text-secondary">3 Invoices awaiting payment</span>
+</div>
+<!-- Card 2 -->
+<div class="border border-outline-variant bg-surface rounded-DEFAULT p-6 flex flex-col gap-2 relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-[64px]">warning</span>
+</div>
+<span class="font-label-caps text-label-caps text-error uppercase">Overdue</span>
+<span class="font-data-metric text-data-metric text-error"><span class="text-headline-md text-error/60 mr-1">₹</span>85,000</span>
+<div class="h-[1px] w-full bg-error/20 mt-2 mb-2"></div>
+<span class="text-xs text-error/80">1 Invoice past due date</span>
+</div>
+<!-- Card 3 -->
+<div class="border border-outline-variant bg-surface rounded-DEFAULT p-6 flex flex-col gap-2 relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-[64px]">check_circle</span>
+</div>
+<span class="font-label-caps text-label-caps text-secondary uppercase">Paid (This Month)</span>
+<span class="font-data-metric text-data-metric text-primary"><span class="text-headline-md text-secondary mr-1">₹</span>2,10,000</span>
+<div class="h-[1px] w-full bg-outline-variant mt-2 mb-2"></div>
+<span class="text-xs text-secondary">4 Invoices settled</span>
+</div>
+</div>
+<!-- Invoice List Table -->
+<div class="border border-outline-variant bg-surface rounded-DEFAULT overflow-hidden mb-stack-lg">
+<div class="p-4 border-b border-outline-variant flex justify-between items-center bg-surface-container-lowest">
+<h3 class="font-headline-md text-headline-md text-primary">Recent Invoices</h3>
+<div class="flex gap-2">
+<button class="p-2 border border-outline-variant rounded-DEFAULT hover:bg-surface-container-low transition-colors"><span class="material-symbols-outlined text-[18px]">filter_list</span></button>
+<button class="p-2 border border-outline-variant rounded-DEFAULT hover:bg-surface-container-low transition-colors"><span class="material-symbols-outlined text-[18px]">more_horiz</span></button>
+</div>
+</div>
+<div class="overflow-x-auto w-full">
+<table class="w-full text-left border-collapse min-w-[800px]">
+<thead>
+<tr class="border-b border-outline-variant bg-surface-container-low/50">
+<th class="p-4 font-label-caps text-label-caps text-secondary uppercase w-24">INV #</th>
+<th class="p-4 font-label-caps text-label-caps text-secondary uppercase">Client</th>
+<th class="p-4 font-label-caps text-label-caps text-secondary uppercase w-32">Date</th>
+<th class="p-4 font-label-caps text-label-caps text-secondary uppercase w-32 text-right">Amount</th>
+<th class="p-4 font-label-caps text-label-caps text-secondary uppercase w-32 text-center">Status</th>
+<th class="p-4 font-label-caps text-label-caps text-secondary uppercase w-24 text-center">Action</th>
+</tr>
+</thead>
+<tbody class="font-table-cell text-table-cell">
+<!-- Row 1 -->
+<tr class="border-b border-outline-variant hover:bg-surface-container-low/50 transition-colors group">
+<td class="p-4 font-semibold text-primary">#INV-042</td>
+<td class="p-4">
+<div class="flex flex-col">
+<span class="text-primary font-medium">Acme Corp India</span>
+<span class="text-secondary text-xs">UX Audit Project</span>
+</div>
+</td>
+<td class="p-4 text-secondary">Oct 12, 2023</td>
+<td class="p-4 text-right font-medium text-primary">₹1,50,000</td>
+<td class="p-4 text-center">
+<span class="inline-flex items-center px-2 py-1 rounded-full border border-outline-variant text-xs font-medium text-secondary bg-surface-container-low">
+<span class="w-2 h-2 rounded-full bg-secondary mr-2"></span>Draft
+                                </span>
+</td>
+<td class="p-4 text-center">
+<button class="text-primary hover:opacity-70 opacity-0 group-hover:opacity-100 transition-opacity"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="border-b border-outline-variant hover:bg-surface-container-low/50 transition-colors group">
+<td class="p-4 font-semibold text-primary">#INV-041</td>
+<td class="p-4">
+<div class="flex flex-col">
+<span class="text-primary font-medium">TechNova Solutions</span>
+<span class="text-secondary text-xs">Monthly Retainer</span>
+</div>
+</td>
+<td class="p-4 text-secondary">Oct 01, 2023</td>
+<td class="p-4 text-right font-medium text-primary">₹2,75,000</td>
+<td class="p-4 text-center">
+<span class="inline-flex items-center px-2 py-1 rounded-full border border-primary/20 text-xs font-medium text-primary bg-primary/5">
+<span class="w-2 h-2 rounded-full bg-primary mr-2 animate-pulse"></span>Pending
+                                </span>
+</td>
+<td class="p-4 text-center">
+<button class="text-primary hover:opacity-70 opacity-0 group-hover:opacity-100 transition-opacity"><span class="material-symbols-outlined text-[20px]">visibility</span></button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="border-b border-outline-variant hover:bg-surface-container-low/50 transition-colors bg-error/5 group">
+<td class="p-4 font-semibold text-error">#INV-040</td>
+<td class="p-4">
+<div class="flex flex-col">
+<span class="text-primary font-medium">StartupX</span>
+<span class="text-secondary text-xs">Brand Identity</span>
+</div>
+</td>
+<td class="p-4 text-secondary">Sep 15, 2023</td>
+<td class="p-4 text-right font-medium text-error">₹85,000</td>
+<td class="p-4 text-center">
+<span class="inline-flex items-center px-2 py-1 rounded-full border border-error/30 text-xs font-medium text-error bg-error/10">
+<span class="w-2 h-2 rounded-full bg-error mr-2"></span>Overdue
+                                </span>
+</td>
+<td class="p-4 text-center">
+<button class="text-error hover:opacity-70 opacity-0 group-hover:opacity-100 transition-opacity" title="Mark Paid"><span class="material-symbols-outlined text-[20px]">task_alt</span></button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-low/50 transition-colors group">
+<td class="p-4 font-semibold text-secondary line-through">#INV-039</td>
+<td class="p-4 text-secondary">
+<div class="flex flex-col">
+<span class="font-medium">Global Logistics Ltd</span>
+<span class="text-xs">Website Redesign</span>
+</div>
+</td>
+<td class="p-4 text-secondary">Aug 28, 2023</td>
+<td class="p-4 text-right font-medium text-secondary">₹1,10,000</td>
+<td class="p-4 text-center">
+<span class="inline-flex items-center px-2 py-1 rounded-full border border-outline-variant text-xs font-medium text-secondary opacity-70">
+<span class="material-symbols-outlined text-[14px] mr-1">check</span>Paid
+                                </span>
+</td>
+<td class="p-4 text-center">
+<button class="text-secondary hover:text-primary opacity-0 group-hover:opacity-100 transition-opacity"><span class="material-symbols-outlined text-[20px]">download</span></button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile) -->
+<nav class="fixed bottom-0 w-full z-50 md:hidden flex justify-around items-center h-16 pb-safe bg-surface dark:bg-surface-dim border-t border-outline-variant dark:border-outline">
+<a class="flex flex-col items-center justify-center text-secondary dark:text-secondary-fixed-dim scale-95 transition-transform duration-100 active:bg-surface-container-highest flex-1 h-full" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-caps text-[10px] mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary dark:text-on-primary-fixed font-bold scale-95 transition-transform duration-100 active:bg-surface-container-highest flex-1 h-full" href="#">
+<span class="material-symbols-outlined" data-weight="fill">payments</span>
+<span class="font-label-caps text-[10px] mt-1">Ledger</span>
+</a>
+<a class="flex flex-col items-center justify-center text-secondary dark:text-secondary-fixed-dim scale-95 transition-transform duration-100 active:bg-surface-container-highest flex-1 h-full" href="#">
+<span class="material-symbols-outlined">calculate</span>
+<span class="font-label-caps text-[10px] mt-1">Tax</span>
+</a>
+<a class="flex flex-col items-center justify-center text-secondary dark:text-secondary-fixed-dim scale-95 transition-transform duration-100 active:bg-surface-container-highest flex-1 h-full" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-caps text-[10px] mt-1">Profile</span>
+</a>
+</nav>
+</body></html>

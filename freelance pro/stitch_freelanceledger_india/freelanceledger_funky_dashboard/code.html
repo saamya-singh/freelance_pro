@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FreelanceLedger - Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400..700;1,400..700&amp;family=Geist:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "primary": "#000cd8",
+                      "background": "#fcf9f8",
+                      "secondary-fixed-dim": "#a1d820",
+                      "tertiary-container": "#ac2000",
+                      "secondary-container": "#bcf540",
+                      "on-secondary": "#ffffff",
+                      "secondary": "#4a6700",
+                      "surface": "#fcf9f8",
+                      "on-tertiary-container": "#ffc0b3",
+                      "outline": "#757588",
+                      "surface-container": "#f0edec",
+                      "surface-variant": "#e5e2e1",
+                      "surface-bright": "#fcf9f8",
+                      "tertiary-fixed": "#ffdad3",
+                      "on-error": "#ffffff",
+                      "error": "#ba1a1a",
+                      "on-secondary-fixed": "#141f00",
+                      "secondary-fixed": "#bcf540",
+                      "tertiary-fixed-dim": "#ffb4a4",
+                      "primary-container": "#2e3aee",
+                      "outline-variant": "#c5c5d9",
+                      "surface-container-highest": "#e5e2e1",
+                      "inverse-surface": "#313030",
+                      "surface-dim": "#dcd9d9",
+                      "on-primary-fixed-variant": "#101cde",
+                      "on-primary": "#ffffff",
+                      "on-secondary-container": "#4f6e00",
+                      "surface-container-high": "#ebe7e7",
+                      "primary-fixed": "#e0e0ff",
+                      "primary-fixed-dim": "#bec2ff",
+                      "on-background": "#1c1b1b",
+                      "on-surface": "#1c1b1b",
+                      "surface-container-low": "#f6f3f2",
+                      "on-primary-fixed": "#00036b",
+                      "on-tertiary-fixed-variant": "#8c1800",
+                      "surface-container-lowest": "#ffffff",
+                      "inverse-primary": "#bec2ff",
+                      "error-container": "#ffdad6",
+                      "inverse-on-surface": "#f3f0ef",
+                      "on-error-container": "#93000a",
+                      "on-tertiary-fixed": "#3d0600",
+                      "on-surface-variant": "#454556",
+                      "on-secondary-fixed-variant": "#374e00",
+                      "on-primary-container": "#c8cbff",
+                      "tertiary": "#811600",
+                      "surface-tint": "#3642f4",
+                      "on-tertiary": "#ffffff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "24px",
+                      "margin-mobile": "20px",
+                      "margin-desktop": "64px",
+                      "sticker-offset": "-8px",
+                      "unit": "4px"
+              },
+              "fontFamily": {
+                      "headline-lg": ["Archivo Narrow"],
+                      "body-lg": ["Geist"],
+                      "headline-lg-mobile": ["Archivo Narrow"],
+                      "body-md": ["Geist"],
+                      "display-lg": ["Archivo Narrow"],
+                      "headline-md": ["Archivo Narrow"],
+                      "label-sm": ["Geist"]
+              },
+              "fontSize": {
+                      "headline-lg": ["40px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "headline-lg-mobile": ["32px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "display-lg": ["72px", {"lineHeight": "72px", "letterSpacing": "-0.04em", "fontWeight": "700"}],
+                      "headline-md": ["24px", {"lineHeight": "28px", "letterSpacing": "0em", "fontWeight": "600"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}]
+              }
+      }
+          },
+        }
+    </script>
+<style>
+        /* Professional Funky Utilities */
+        .hard-shadow { box-shadow: 4px 4px 0px 0px #1c1b1b; }
+        .hard-shadow-sm { box-shadow: 2px 2px 0px 0px #1c1b1b; }
+        .border-charcoal { border: 1px solid #1c1b1b; }
+        .sticker { position: absolute; z-index: 10; }
+        
+        /* Typography assignments */
+        body { font-family: 'Geist', sans-serif; }
+        h1, h2, h3, h4, h5, h6, .font-headline { font-family: 'Archivo Narrow', sans-serif; }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen pb-24">
+<!-- TopAppBar -->
+<header class="w-full top-0 sticky bg-background z-40 transition-colors duration-200 shadow-[0_4px_20px_-10px_rgba(0,0,0,0.1)]">
+<div class="flex justify-between items-center px-gutter py-4 w-full max-w-7xl mx-auto">
+<div class="flex items-center gap-4">
+<img class="w-10 h-10 rounded-full border-charcoal object-cover bg-surface-container" data-alt="A small, professional yet creative avatar portrait of a freelancer in a bright, modern light-mode setting with subtle colorful accents, high quality photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDgszzBOMJQkUjcNr8E1r3E1GNDXXwuXzYGFG2fLEfDNyzK56x0Vj_khxyk0SmdgouWylsDj7OG5YyckJw_JZkkhJn4MN4ScKwgO1cV5oamgN73_7Dc07Eq2XeRC66j8aA0aY00JhRFQ1YJMu897E8wNyGnhmIK-duNf1Wqb19nizaZLoKCUAcKexQh-MR2IBDCrvbVa8ER-rBHW0Aa1L5l1REF9Nif1XNF54yKQbFdEeZCtxEJ1O6s"/>
+<h1 class="font-headline-md text-headline-md font-bold text-primary tracking-tighter">FREELANCER.OS</h1>
+</div>
+<button class="p-2 rounded-full hover:text-secondary transition-colors duration-200 active:translate-y-px text-primary">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="max-w-7xl mx-auto px-4 md:px-gutter mt-8">
+<!-- Greeting -->
+<div class="mb-8 relative">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg">Good morning, Ankit.</h2>
+<p class="font-body-lg text-body-lg text-outline mt-2">Here's your business at a glance.</p>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-4 md:grid-cols-12 gap-6 md:gap-gutter">
+<!-- Revenue Card -->
+<div class="col-span-4 md:col-span-8 bg-surface border-charcoal rounded-lg p-6 relative">
+<!-- Sticker -->
+<div class="sticker -top-3 -right-3 bg-secondary-container text-on-secondary-container border-charcoal hard-shadow-sm rounded-full px-4 py-1 font-label-sm text-label-sm flex items-center gap-1 transform rotate-2">
+<span class="material-symbols-outlined text-[16px]">trending_up</span> +14% M/M
+                </div>
+<h3 class="font-body-md text-body-md text-outline">Total Revenue (YTD)</h3>
+<div class="mt-4 flex items-baseline gap-2">
+<span class="font-display-lg text-display-lg text-primary tracking-tighter">₹4,82,500</span>
+</div>
+<!-- Minimalist Chart placeholder area -->
+<div class="mt-8 h-24 w-full relative border-b border-charcoal border-dashed flex items-end">
+<!-- Fake chart line using SVG -->
+<svg class="w-full h-full overflow-visible" preserveaspectratio="none" viewbox="0 0 100 40">
+<path class="drop-shadow-[0_4px_4px_rgba(0,12,216,0.2)]" d="M0,30 Q10,10 20,25 T40,15 T60,20 T80,5 T100,0" fill="none" stroke="#000cd8" stroke-width="2"></path>
+<!-- Data points -->
+<circle cx="20" cy="25" fill="#000cd8" r="2"></circle>
+<circle cx="40" cy="15" fill="#000cd8" r="2"></circle>
+<circle cx="60" cy="20" fill="#000cd8" r="2"></circle>
+<circle cx="80" cy="5" fill="#000cd8" r="2"></circle>
+<circle cx="100" cy="0" fill="#000cd8" r="2"></circle>
+</svg>
+</div>
+</div>
+<!-- Outstanding Card -->
+<div class="col-span-4 md:col-span-4 bg-surface border-charcoal rounded-lg p-6 relative flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start">
+<h3 class="font-body-md text-body-md text-outline">Outstanding</h3>
+<span class="material-symbols-outlined text-tertiary-container">warning</span>
+</div>
+<div class="mt-4">
+<span class="font-headline-lg-mobile text-headline-lg-mobile text-tertiary-container tracking-tighter">₹1,24,000</span>
+</div>
+</div>
+<!-- Funky Action Button -->
+<button class="mt-6 w-full bg-primary text-on-primary font-label-sm text-label-sm uppercase py-3 rounded-full border-charcoal hard-shadow hover:translate-y-px hover:shadow-[2px_2px_0px_0px_#1c1b1b] transition-all flex justify-center items-center gap-2">
+                    Send Reminders <span class="material-symbols-outlined text-[16px]">send</span>
+</button>
+</div>
+<!-- Recent Invoices List (Bento Row Style) -->
+<div class="col-span-4 md:col-span-12 mt-4">
+<div class="flex justify-between items-center mb-4 border-b border-charcoal pb-2">
+<h3 class="font-headline-md text-headline-md">Recent Invoices</h3>
+<button class="font-label-sm text-label-sm text-primary hover:underline">View All</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<!-- Invoice Item 1 -->
+<div class="bg-surface border-charcoal rounded-lg p-4 hover:bg-surface-container-low transition-colors cursor-pointer group">
+<div class="flex justify-between items-start mb-4">
+<span class="bg-tertiary-fixed text-on-tertiary-fixed border-charcoal text-[10px] px-2 py-1 rounded-full font-bold uppercase tracking-wider shadow-[2px_2px_0px_0px_#1c1b1b]">Overdue</span>
+<span class="font-body-md text-body-md text-outline">INV-042</span>
+</div>
+<h4 class="font-headline-md text-headline-md text-on-background">Acme Corp Design</h4>
+<p class="font-body-lg text-body-lg text-primary mt-1">₹45,000</p>
+</div>
+<!-- Invoice Item 2 -->
+<div class="bg-surface border-charcoal rounded-lg p-4 hover:bg-surface-container-low transition-colors cursor-pointer">
+<div class="flex justify-between items-start mb-4">
+<span class="bg-surface-variant text-on-surface-variant border-charcoal text-[10px] px-2 py-1 rounded-full font-bold uppercase tracking-wider">Draft</span>
+<span class="font-body-md text-body-md text-outline">INV-043</span>
+</div>
+<h4 class="font-headline-md text-headline-md text-on-background">Website Refresh</h4>
+<p class="font-body-lg text-body-lg mt-1">₹1,20,000</p>
+</div>
+<!-- Invoice Item 3 -->
+<div class="bg-surface border-charcoal rounded-lg p-4 hover:bg-surface-container-low transition-colors cursor-pointer">
+<div class="flex justify-between items-start mb-4">
+<span class="bg-secondary-container text-on-secondary-container border-charcoal text-[10px] px-2 py-1 rounded-full font-bold uppercase tracking-wider">Paid</span>
+<span class="font-body-md text-body-md text-outline">INV-041</span>
+</div>
+<h4 class="font-headline-md text-headline-md text-on-background">Logo Concept</h4>
+<p class="font-body-lg text-body-lg mt-1">₹15,000</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-2 bg-surface shadow-[0_-4px_20px_rgba(0,0,0,0.05)] md:hidden">
+<!-- Home (Active) -->
+<button class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 shadow-[4px_4px_0px_0px_#1c1b1b] border-charcoal active:scale-95 duration-100 group">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="font-label-sm text-label-sm mt-1">Home</span>
+</button>
+<!-- Invoices -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-high transition-all active:scale-95 duration-100 rounded-full">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="font-label-sm text-label-sm mt-1">Invoices</span>
+</button>
+<!-- Clients -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-high transition-all active:scale-95 duration-100 rounded-full">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label-sm text-label-sm mt-1">Clients</span>
+</button>
+<!-- Wallet -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-high transition-all active:scale-95 duration-100 rounded-full">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+<span class="font-label-sm text-label-sm mt-1">Wallet</span>
+</button>
+</nav>
+</body></html>

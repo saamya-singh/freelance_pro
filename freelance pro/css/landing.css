@@ -1,0 +1,230 @@
+/* ============================================================
+   LANDING PAGE STYLES — VIBRANT MODERN SAAS + DARK MODE
+   ============================================================ */
+
+.landing-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(248, 250, 252, 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-color);
+  padding: 1.25rem 2.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: var(--transition-theme);
+}
+
+html[data-theme="dark"] .landing-nav {
+  background: rgba(11, 15, 25, 0.85);
+}
+
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 800;
+  font-size: 1.25rem;
+  letter-spacing: -0.03em;
+}
+
+.brand-logo .country-tag {
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 0.2rem 0.5rem;
+  background: var(--primary-accent);
+  color: #FFF;
+  border-radius: var(--radius-pill);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.landing-hero {
+  padding: 6rem 2.5rem 4rem 2.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.hero-tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.4rem 1rem;
+  border: 1px solid var(--primary-accent);
+  border-radius: var(--radius-pill);
+  background: var(--primary-accent-subtle);
+  color: var(--primary-accent);
+  margin-bottom: 2rem;
+}
+
+.hero-title {
+  font-size: 4.25rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  margin-bottom: 1.5rem;
+  max-width: 920px;
+  margin-left: auto;
+  margin-right: auto;
+  color: var(--text-primary);
+}
+
+.hero-subtitle {
+  font-size: 1.25rem;
+  color: var(--text-secondary);
+  max-width: 640px;
+  margin: 0 auto 2.5rem auto;
+  line-height: 1.6;
+}
+
+.hero-ctas {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Interactive Product Preview Card */
+.preview-container {
+  max-width: 1100px;
+  margin: 3rem auto 6rem auto;
+  padding: 0 1.5rem;
+}
+
+.preview-window {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-modal);
+  overflow: hidden;
+  transition: var(--transition-theme);
+}
+
+.preview-bar {
+  background: var(--bg-canvas);
+  border-bottom: 1px solid var(--border-color);
+  padding: 0.75rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.preview-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--text-tertiary);
+}
+
+.preview-body {
+  padding: 2.5rem;
+}
+
+.preview-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.preview-metric-card {
+  padding: 1.25rem;
+  background: var(--bg-canvas);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  text-align: left;
+  transition: var(--transition-theme);
+}
+
+.preview-metric-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+.preview-metric-val {
+  font-size: 1.85rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  font-feature-settings: "tnum";
+  color: var(--text-primary);
+}
+
+/* Scroll Explainer Sections */
+.explainer-section {
+  padding: 6rem 2.5rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.explainer-header {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto 4rem auto;
+}
+
+.explainer-stages {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.stage-card {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 2rem;
+  padding: 2.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  align-items: start;
+  transition: var(--transition-theme);
+}
+
+.stage-num {
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--primary-accent);
+  font-family: var(--font-mono);
+}
+
+.stage-content h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.stage-content p {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* Final Statement Callout */
+.landing-final {
+  padding: 8rem 2.5rem;
+  text-align: center;
+  background: var(--primary-accent);
+  color: #FFFFFF;
+}
+
+.landing-final h2 {
+  color: #FFFFFF;
+  font-size: 3rem;
+  max-width: 800px;
+  margin: 0 auto 2rem auto;
+  line-height: 1.15;
+}
+
+.landing-final p {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 1.2rem;
+  margin-bottom: 3rem;
+}

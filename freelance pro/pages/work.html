@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Work Entries — FreelancePro</title>
+  
+  <link rel="stylesheet" href="../css/global.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: ['class', '[data-theme="dark"]'],
+      theme: {
+        extend: {
+          colors: {
+            brandBlue: { 500: '#3B82F6', 600: '#2563EB', 700: '#1D4ED8' }
+          },
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <script src="../js/core/theme.js"></script>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-50 antialiased transition-colors duration-200">
+
+  <div class="flex min-h-screen">
+    <aside id="app-sidebar"></aside>
+
+    <main class="flex-1 md:ml-[250px] flex flex-col min-w-0 pb-20 md:pb-8">
+      <header id="app-header"></header>
+
+      <div class="p-6 md:p-8 max-w-7xl w-full mx-auto space-y-8 animate-fade-in-up">
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-4 border-b border-slate-200 dark:border-slate-800">
+          <div>
+            <h1 class="text-3xl font-extrabold tracking-tight">Work Entries</h1>
+            <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Track project deliverables, logged billable hours, hourly rates, and convert them to invoices.</p>
+          </div>
+          <div>
+            <button class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs rounded-full border-2 border-slate-900 shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] hover:-translate-y-0.5 transition-all" id="add-work-btn">+ Add Work Entry</button>
+          </div>
+        </div>
+
+        <!-- Metric Cards Bar -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="bg-white dark:bg-slate-900 border-2 border-slate-900 dark:border-slate-800 rounded-3xl p-6 shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] card-hover-effect">
+            <div class="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Hours Logged</div>
+            <div class="text-3xl font-extrabold text-slate-900 dark:text-white font-mono mt-2" id="work-total-hours">0.0 hrs</div>
+            <div class="text-xs text-slate-500 mt-1">Across all projects</div>
+          </div>
+          <div class="bg-white dark:bg-slate-900 border-2 border-slate-900 dark:border-slate-800 rounded-3xl p-6 shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] card-hover-effect border-t-4 border-t-amber-500">
+            <div class="text-xs font-bold text-slate-400 uppercase tracking-wider">Unbilled Work Value</div>
+            <div class="text-3xl font-extrabold text-amber-500 font-mono mt-2" id="work-total-unbilled">₹0</div>
+            <div class="text-xs text-slate-500 mt-1">Ready to invoice</div>
+          </div>
+          <div class="bg-white dark:bg-slate-900 border-2 border-slate-900 dark:border-slate-800 rounded-3xl p-6 shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] card-hover-effect border-t-4 border-t-blue-600">
+            <div class="text-xs font-bold text-slate-400 uppercase tracking-wider">Invoiced Work Value</div>
+            <div class="text-3xl font-extrabold text-blue-600 dark:text-blue-400 font-mono mt-2" id="work-total-invoiced">₹0</div>
+            <div class="text-xs text-slate-500 mt-1">Billed to clients</div>
+          </div>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="flex items-center gap-3 bg-white dark:bg-slate-900 p-4 border-2 border-slate-900 dark:border-slate-800 rounded-3xl shadow-[3px_3px_0px_0px_rgba(15,23,42,1)]">
+          <label class="text-xs font-bold text-slate-500">Filter by Client:</label>
+          <select id="work-client-filter" class="px-4 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-full text-xs font-semibold focus:outline-none focus:border-blue-600 max-w-xs">
+            <option value="all">All Clients</option>
+          </select>
+        </div>
+
+        <!-- Work Table Container -->
+        <div id="work-table-container"></div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Core Scripts -->
+  <script src="../js/data/demo-data.js"></script>
+  <script src="../js/data/tax-slabs.js"></script>
+  <script src="../js/core/storage.js"></script>
+  <script src="../js/core/utils.js"></script>
+  <script src="../js/core/validators.js"></script>
+  <script src="../js/core/notifications.js"></script>
+  <script src="../js/core/auth.js"></script>
+  <script src="../js/core/state.js"></script>
+  <script src="../js/core/router.js"></script>
+  <script src="../js/components/sidebar.js"></script>
+  <script src="../js/components/header.js"></script>
+  <script src="../js/components/modal.js"></script>
+  <script src="../js/components/confirm-dialog.js"></script>
+  <script src="../js/components/table.js"></script>
+  <script src="../js/components/command-palette.js"></script>
+  <script src="../js/core/app.js"></script>
+
+  <script src="../js/pages/work.js"></script>
+</body>
+</html>
