@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Invoices — FreelancePro</title>
+  
+  <link rel="stylesheet" href="../css/global.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: ['class', '[data-theme="dark"]'],
+      theme: {
+        extend: {
+          colors: {
+            brandBlue: { 500: '#3B82F6', 600: '#2563EB', 700: '#1D4ED8' },
+            neonLime: { 400: '#A3E635', 500: '#84CC16', 950: '#1A2E05' }
+          },
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <script src="../js/core/theme.js"></script>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-50 antialiased transition-colors duration-200">
+
+  <div class="flex min-h-screen">
+    <aside id="app-sidebar"></aside>
+
+    <main class="flex-1 md:ml-[250px] flex flex-col min-w-0 pb-20 md:pb-8">
+      <header id="app-header"></header>
+
+      <div class="p-6 md:p-8 max-w-7xl w-full mx-auto space-y-8 animate-fade-in-up">
+        <!-- Page Title & Header Action -->
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-4 border-b border-slate-200 dark:border-slate-800">
+          <div>
+            <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight">INVOICES</h1>
+            <p class="text-sm text-slate-500 dark:text-slate-400 mt-1 max-w-xl">Manage your cash flow, track pending payments, and send beautifully crafted invoices to your clients.</p>
+          </div>
+          <div>
+            <button class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-sm rounded-full border-2 border-slate-900 shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] hover:-translate-y-0.5 transition-all" id="create-invoice-btn">+ CREATE INVOICE</button>
+          </div>
+        </div>
+
+        <!-- Metric Cards Stack -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- Awaiting Funds Card -->
+          <div class="bg-white dark:bg-slate-900 border-2 border-slate-900 dark:border-slate-800 rounded-3xl p-6 shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] card-hover-effect flex flex-col justify-between transition-colors">
+            <div class="flex justify-between items-start mb-4">
+              <div>
+                <div class="text-xs font-extrabold text-slate-900 dark:text-slate-100 uppercase tracking-wider">Awaiting Funds</div>
+                <div class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white font-mono mt-2" id="inv-total-pending">₹0</div>
+                <div class="text-xs text-slate-400 mt-1" id="inv-pending-count-sub">Across 0 active invoices</div>
+              </div>
+              <span class="px-3 py-1 bg-blue-100 dark:bg-blue-950 text-blue-600 dark:text-blue-400 text-[10px] font-extrabold rounded-full uppercase border border-blue-200">PENDING</span>
+            </div>
+          </div>
+
+          <!-- Overdue Card -->
+          <div class="bg-white dark:bg-slate-900 border-2 border-slate-900 dark:border-slate-800 rounded-3xl p-6 shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] card-hover-effect flex flex-col justify-between transition-colors">
+            <div class="flex justify-between items-start mb-4">
+              <div>
+                <div class="text-xs font-extrabold text-slate-900 dark:text-slate-100 uppercase tracking-wider">Overdue</div>
+                <div class="text-2xl sm:text-3xl font-extrabold text-red-600 font-mono mt-2" id="inv-total-overdue">₹0</div>
+                <div class="text-xs text-slate-400 mt-1" id="inv-overdue-count-sub">0 invoices need attention</div>
+              </div>
+              <span class="px-3 py-1 bg-red-100 dark:bg-red-950 text-red-600 text-[10px] font-extrabold rounded-full uppercase border border-red-200">⚠️ ACTION REQD</span>
+            </div>
+          </div>
+
+          <!-- Paid (30 Days) Card -->
+          <div class="bg-white dark:bg-slate-900 border-2 border-slate-900 dark:border-slate-800 rounded-3xl p-6 shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] card-hover-effect flex flex-col justify-between transition-colors">
+            <div class="flex justify-between items-start mb-4">
+              <div>
+                <div class="text-xs font-extrabold text-slate-900 dark:text-slate-100 uppercase tracking-wider">Paid (30 Days)</div>
+                <div class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white font-mono mt-2" id="inv-total-paid">₹0</div>
+                <div class="text-xs text-slate-400 mt-1">Great month so far!</div>
+              </div>
+              <span class="px-3 py-1 bg-lime-400 text-slate-950 text-[10px] font-extrabold rounded-full uppercase border border-slate-900">✓ CLEARED</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Filter Pills Bar & Search -->
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 bg-white dark:bg-slate-900 p-4 border-2 border-slate-900 dark:border-slate-800 rounded-3xl shadow-[3px_3px_0px_0px_rgba(15,23,42,1)]">
+          <div class="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0">
+            <button class="inv-filter-btn active px-4 py-1.5 bg-blue-600 text-white text-xs font-extrabold rounded-full" data-filter="all">All</button>
+            <button class="inv-filter-btn px-4 py-1.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-bold rounded-full" data-filter="draft">Drafts</button>
+            <button class="inv-filter-btn px-4 py-1.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-bold rounded-full" data-filter="sent">Sent</button>
+            <button class="inv-filter-btn px-4 py-1.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-bold rounded-full" data-filter="paid">Paid</button>
+          </div>
+
+          <div class="relative flex-1 sm:max-w-xs">
+            <input type="text" id="invoice-search-input" class="w-full pl-9 pr-4 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-full text-xs font-medium focus:outline-none focus:border-blue-600" placeholder="Search invoices..." />
+            <svg class="w-4 h-4 text-slate-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          </div>
+        </div>
+
+        <!-- Invoices Data Table Container -->
+        <div id="invoices-table-container"></div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Floating Action Button (FAB +) -->
+  <button id="create-invoice-fab-btn" onclick="document.getElementById('create-invoice-btn').click()" class="fixed bottom-20 md:bottom-8 right-6 w-14 h-14 bg-blue-600 text-white rounded-full border-2 border-slate-900 flex items-center justify-center text-2xl font-bold shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] hover:bg-blue-700 transform hover:scale-110 transition-all z-40 animate-pulse-glow" title="Create Invoice">
+    +
+  </button>
+
+  <!-- Mobile Bottom Navigation Bar -->
+  <div class="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-t-2 border-slate-900 dark:border-slate-800 px-6 py-2.5 flex justify-between items-center z-50">
+    <a href="dashboard.html" class="flex flex-col items-center gap-0.5 text-slate-500 font-bold text-[10px]">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+      <span>Home</span>
+    </a>
+    <a href="invoices.html" class="px-4 py-1.5 bg-lime-400 text-slate-950 font-extrabold border-2 border-slate-900 rounded-full shadow-[2px_2px_0px_0px_rgba(15,23,42,1)] flex items-center gap-1.5 text-xs">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+      <span>Invoices</span>
+    </a>
+    <a href="clients.html" class="flex flex-col items-center gap-0.5 text-slate-500 font-bold text-[10px]">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+      <span>Clients</span>
+    </a>
+    <a href="tax.html" class="flex flex-col items-center gap-0.5 text-slate-500 font-bold text-[10px]">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+      <span>Wallet</span>
+    </a>
+  </div>
+
+  <!-- Core Scripts -->
+  <script src="../js/data/demo-data.js"></script>
+  <script src="../js/data/tax-slabs.js"></script>
+  <script src="../js/core/storage.js"></script>
+  <script src="../js/core/utils.js"></script>
+  <script src="../js/core/validators.js"></script>
+  <script src="../js/core/notifications.js"></script>
+  <script src="../js/core/auth.js"></script>
+  <script src="../js/core/state.js"></script>
+  <script src="../js/core/router.js"></script>
+  <script src="../js/components/sidebar.js"></script>
+  <script src="../js/components/header.js"></script>
+  <script src="../js/components/modal.js"></script>
+  <script src="../js/components/confirm-dialog.js"></script>
+  <script src="../js/components/table.js"></script>
+  <script src="../js/components/command-palette.js"></script>
+  <script src="../js/core/app.js"></script>
+
+  <script src="../js/pages/invoices.js"></script>
+</body>
+</html>
