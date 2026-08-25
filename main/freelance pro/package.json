@@ -1,0 +1,18 @@
+{
+  "name": "freelanceledger",
+  "version": "1.0.0",
+  "description": "FreelanceLedger India with Groq AI Financial Copilot",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "groq-sdk": "^0.15.0"
+  },
+  "keywords": ["freelance", "finance", "ai", "groq"],
+  "author": "",
+  "license": "ISC"
+}

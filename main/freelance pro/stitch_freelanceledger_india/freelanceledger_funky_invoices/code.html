@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Invoices - Freelancer.OS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#000cd8",
+                        "background": "#fcf9f8",
+                        "secondary-fixed-dim": "#a1d820",
+                        "tertiary-container": "#ac2000",
+                        "secondary-container": "#bcf540",
+                        "on-secondary": "#ffffff",
+                        "secondary": "#4a6700",
+                        "surface": "#fcf9f8",
+                        "on-tertiary-container": "#ffc0b3",
+                        "outline": "#757588",
+                        "surface-container": "#f0edec",
+                        "surface-variant": "#e5e2e1",
+                        "surface-bright": "#fcf9f8",
+                        "tertiary-fixed": "#ffdad3",
+                        "on-error": "#ffffff",
+                        "error": "#ba1a1a",
+                        "on-secondary-fixed": "#141f00",
+                        "secondary-fixed": "#bcf540",
+                        "tertiary-fixed-dim": "#ffb4a4",
+                        "primary-container": "#2e3aee",
+                        "outline-variant": "#c5c5d9",
+                        "surface-container-highest": "#e5e2e1",
+                        "inverse-surface": "#313030",
+                        "surface-dim": "#dcd9d9",
+                        "on-primary-fixed-variant": "#101cde",
+                        "on-primary": "#ffffff",
+                        "on-secondary-container": "#4f6e00",
+                        "surface-container-high": "#ebe7e7",
+                        "primary-fixed": "#e0e0ff",
+                        "primary-fixed-dim": "#bec2ff",
+                        "on-background": "#1c1b1b",
+                        "on-surface": "#1c1b1b",
+                        "surface-container-low": "#f6f3f2",
+                        "on-primary-fixed": "#00036b",
+                        "on-tertiary-fixed-variant": "#8c1800",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-primary": "#bec2ff",
+                        "error-container": "#ffdad6",
+                        "inverse-on-surface": "#f3f0ef",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed": "#3d0600",
+                        "on-surface-variant": "#454556",
+                        "on-secondary-fixed-variant": "#374e00",
+                        "on-primary-container": "#c8cbff",
+                        "tertiary": "#811600",
+                        "surface-tint": "#3642f4",
+                        "on-tertiary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "margin-mobile": "20px",
+                        "margin-desktop": "64px",
+                        "sticker-offset": "-8px",
+                        "unit": "4px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["archivoNarrow", "sans-serif"],
+                        "body-lg": ["geist", "sans-serif"],
+                        "headline-lg-mobile": ["archivoNarrow", "sans-serif"],
+                        "body-md": ["geist", "sans-serif"],
+                        "display-lg": ["archivoNarrow", "sans-serif"],
+                        "headline-md": ["archivoNarrow", "sans-serif"],
+                        "label-sm": ["geist", "sans-serif"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["40px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "display-lg": ["72px", { "lineHeight": "72px", "letterSpacing": "-0.04em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "28px", "letterSpacing": "0em", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        @font-face {
+            font-family: 'archivoNarrow';
+            src: url('https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400..700;1,400..700&display=swap');
+        }
+        @font-face {
+            font-family: 'geist';
+            src: url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap');
+        }
+        
+        .hard-shadow {
+            box-shadow: 4px 4px 0px 0px #1c1b1b;
+        }
+        .hard-shadow-sm {
+            box-shadow: 2px 2px 0px 0px #1c1b1b;
+        }
+        .hard-shadow-active:active {
+            box-shadow: 0px 0px 0px 0px #1c1b1b;
+            transform: translate(4px, 4px);
+        }
+        .card-border {
+            border: 1px solid #1c1b1b;
+        }
+        
+        body {
+            background-color: #fcf9f8;
+            color: #1c1b1b;
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md pb-24 md:pb-0">
+<!-- TopAppBar (Web & Tablet) -->
+<header class="hidden md:flex w-full top-0 sticky bg-background dark:bg-on-background border-b border-on-background dark:border-outline flex justify-between items-center px-gutter py-4 max-w-7xl mx-auto z-50">
+<div class="flex items-center gap-4">
+<span class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed tracking-tighter">FREELANCER.OS</span>
+</div>
+<nav class="flex gap-8">
+<a class="font-label-sm text-label-sm text-on-surface-variant dark:text-surface-variant hover:text-secondary dark:hover:text-secondary-fixed transition-colors duration-200 active:translate-y-px" href="#">Home</a>
+<a class="font-label-sm text-label-sm text-primary dark:text-primary-fixed hover:text-secondary dark:hover:text-secondary-fixed transition-colors duration-200 active:translate-y-px" href="#">Invoices</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant dark:text-surface-variant hover:text-secondary dark:hover:text-secondary-fixed transition-colors duration-200 active:translate-y-px" href="#">Clients</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant dark:text-surface-variant hover:text-secondary dark:hover:text-secondary-fixed transition-colors duration-200 active:translate-y-px" href="#">Wallet</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<div class="w-8 h-8 rounded-full card-border overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="A small circular avatar portrait of a creative professional, high quality, studio lighting, clean background, modern professional funky aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzQNFwNvRiwuvP04tF2GMknLsRPq-B55BiI-IGFeandaWZ9xpXUer8nUKPeUCI9KlihmNtXcKQaeQ_lDtGLZEAlVseH5IvS-pjV-cJFuILkuETWCmDNqgdaWViLXiGrOhGUblqlVApjUJIBdKyd3n0aCb-AE8rojxMiv5rNnZYDAF3_jCM49mOlHAMrrlgMqOhS3azX2GJArsmU2bhScNCNShxk613Tg26ZNVKswsXn-LK9aNljfa3"/>
+</div>
+</div>
+</header>
+<!-- TopAppBar (Mobile) -->
+<header class="flex md:hidden w-full top-0 sticky bg-background border-b border-on-background justify-between items-center px-4 py-4 z-50">
+<span class="font-headline-md text-headline-md font-bold text-primary tracking-tighter">FREELANCER.OS</span>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<div class="w-8 h-8 rounded-full card-border overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="A small circular avatar portrait of a creative professional, high quality, studio lighting, clean background, modern professional funky aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDiL1E9jCgSpaTv3MIo07tIYNnpIbi9Ncr2CVRtQMrgLTwkL3K5XldixzW-EASytEiIrt6BFgyiXto3hV2O2f3USH-UXdqYUJZyTKCCM3esQrq9IY6evm9XA8h5LKCrEHYX80X7t3l1MGJYuhUF_T_M48m_Rym_m5If5Hh8Y-7C5Ny8k066ERxjjHrrB3vchrzvcqLmEY2lXLx94LwHRLR3nnM_HhfLwEtIaHxGPhAp59tz8uxhT51n"/>
+</div>
+</div>
+</header>
+<main class="max-w-7xl mx-auto px-gutter py-8 md:py-12">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6 relative">
+<div>
+<h1 class="font-display-lg text-display-lg text-on-background uppercase relative z-10">Invoices</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-2 max-w-xl">Manage your cash flow, track pending payments, and send beautifully crafted invoices to your clients.</p>
+</div>
+<button class="bg-primary text-on-primary font-label-sm text-label-sm uppercase px-6 py-3 rounded-full hard-shadow hard-shadow-active transition-transform flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                Create Invoice
+            </button>
+</div>
+<!-- Summary Cards (Bento Style) -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+<!-- Pending Card -->
+<div class="bg-surface-container-lowest card-border p-6 relative group">
+<div class="absolute top-sticker-offset right-sticker-offset bg-surface-container-lowest card-border p-1 z-10">
+<div class="bg-primary-container text-on-primary-container font-label-sm text-label-sm uppercase px-3 py-1 rounded-full flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                        Pending
+                    </div>
+</div>
+<h3 class="font-headline-md text-headline-md mb-4 pb-2 border-b border-on-background">Awaiting Funds</h3>
+<div class="text-4xl font-headline-lg text-on-background">$12,450.00</div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2">Across 4 active invoices</p>
+</div>
+<!-- Overdue Card -->
+<div class="bg-surface-container-lowest card-border p-6 relative group">
+<div class="absolute top-sticker-offset right-sticker-offset bg-surface-container-lowest card-border p-1 z-10">
+<div class="bg-error-container text-on-error-container font-label-sm text-label-sm uppercase px-3 py-1 rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">warning</span>
+                        Action Req
+                    </div>
+</div>
+<h3 class="font-headline-md text-headline-md mb-4 pb-2 border-b border-on-background">Overdue</h3>
+<div class="text-4xl font-headline-lg text-error">$3,200.00</div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2">1 invoice needs attention</p>
+</div>
+<!-- Paid Card -->
+<div class="bg-surface-container-lowest card-border p-6 relative group">
+<div class="absolute top-sticker-offset right-sticker-offset bg-surface-container-lowest card-border p-1 z-10">
+<div class="bg-secondary-container text-on-secondary-container font-label-sm text-label-sm uppercase px-3 py-1 rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+                        Cleared
+                    </div>
+</div>
+<h3 class="font-headline-md text-headline-md mb-4 pb-2 border-b border-on-background">Paid (30 Days)</h3>
+<div class="text-4xl font-headline-lg text-secondary">$8,900.00</div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2">Great month so far!</p>
+</div>
+</div>
+<!-- Filters & Search -->
+<div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
+<div class="flex gap-2 w-full md:w-auto overflow-x-auto pb-2 md:pb-0">
+<button class="bg-on-background text-surface font-label-sm text-label-sm px-4 py-2 rounded-full whitespace-nowrap">All</button>
+<button class="bg-surface-container-lowest text-on-background card-border font-label-sm text-label-sm px-4 py-2 rounded-full hover:bg-surface-variant transition-colors whitespace-nowrap">Drafts</button>
+<button class="bg-surface-container-lowest text-on-background card-border font-label-sm text-label-sm px-4 py-2 rounded-full hover:bg-surface-variant transition-colors whitespace-nowrap">Sent</button>
+<button class="bg-surface-container-lowest text-on-background card-border font-label-sm text-label-sm px-4 py-2 rounded-full hover:bg-surface-variant transition-colors whitespace-nowrap">Paid</button>
+</div>
+<div class="relative w-full md:w-64">
+<input class="w-full bg-surface-container-lowest card-border px-4 py-2 font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Search invoices..." type="text"/>
+<span class="material-symbols-outlined absolute right-3 top-2.5 text-on-surface-variant" data-icon="search">search</span>
+</div>
+</div>
+<!-- Invoice Table (Data Dense) -->
+<div class="bg-surface-container-lowest card-border overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-on-background bg-surface-container-low">
+<th class="p-4 font-headline-md text-body-lg">Client / ID</th>
+<th class="p-4 font-headline-md text-body-lg">Date</th>
+<th class="p-4 font-headline-md text-body-lg text-right">Amount</th>
+<th class="p-4 font-headline-md text-body-lg">Status</th>
+<th class="p-4 font-headline-md text-body-lg text-right">Action</th>
+</tr>
+</thead>
+<tbody class="font-body-md text-body-md">
+<!-- Row 1 -->
+<tr class="border-b border-on-background hover:bg-surface-container-lowest transition-colors group">
+<td class="p-4">
+<div class="font-bold text-on-background">Acme Corp</div>
+<div class="text-on-surface-variant text-sm">#INV-2023-042</div>
+</td>
+<td class="p-4 text-on-surface-variant">Oct 12, 2023</td>
+<td class="p-4 text-right font-bold">$4,500.00</td>
+<td class="p-4">
+<span class="inline-flex items-center px-3 py-1 rounded-full bg-secondary-container text-on-secondary-container text-xs font-bold uppercase tracking-wider card-border rotate-2">
+                                Paid
+                            </span>
+</td>
+<td class="p-4 text-right">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="more_horiz">more_horiz</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="border-b border-on-background hover:bg-surface-container-lowest transition-colors group">
+<td class="p-4">
+<div class="font-bold text-on-background">Stark Industries</div>
+<div class="text-on-surface-variant text-sm">#INV-2023-043</div>
+</td>
+<td class="p-4 text-on-surface-variant">Oct 15, 2023</td>
+<td class="p-4 text-right font-bold">$8,200.00</td>
+<td class="p-4">
+<span class="inline-flex items-center px-3 py-1 rounded-full bg-surface-container text-on-background text-xs font-bold uppercase tracking-wider card-border -rotate-1">
+                                Draft
+                            </span>
+</td>
+<td class="p-4 text-right">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="more_horiz">more_horiz</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="border-b border-on-background hover:bg-surface-container-lowest transition-colors group">
+<td class="p-4">
+<div class="font-bold text-on-background">Wayne Enterprises</div>
+<div class="text-on-surface-variant text-sm">#INV-2023-041</div>
+</td>
+<td class="p-4 text-on-surface-variant">Sep 28, 2023</td>
+<td class="p-4 text-right font-bold">$3,200.00</td>
+<td class="p-4">
+<span class="inline-flex items-center px-3 py-1 rounded-full bg-error text-on-error text-xs font-bold uppercase tracking-wider card-border rotate-1">
+                                Overdue
+                            </span>
+</td>
+<td class="p-4 text-right">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="more_horiz">more_horiz</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-lowest transition-colors group">
+<td class="p-4">
+<div class="font-bold text-on-background">Globex Corp</div>
+<div class="text-on-surface-variant text-sm">#INV-2023-044</div>
+</td>
+<td class="p-4 text-on-surface-variant">Oct 18, 2023</td>
+<td class="p-4 text-right font-bold">$1,250.00</td>
+<td class="p-4">
+<span class="inline-flex items-center px-3 py-1 rounded-full bg-primary text-on-primary text-xs font-bold uppercase tracking-wider card-border -rotate-2">
+                                Sent
+                            </span>
+</td>
+<td class="p-4 text-right">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="more_horiz">more_horiz</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-2 bg-surface dark:bg-surface-dim border-t border-on-background dark:border-outline md:hidden">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-all active:scale-95 duration-100" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-sm text-label-sm mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary rounded-full px-4 py-1 shadow-[4px_4px_0px_0px_#1c1b1b] hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-all active:scale-95 duration-100" href="#">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span class="font-label-sm text-label-sm mt-1">Invoices</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-all active:scale-95 duration-100" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="font-label-sm text-label-sm mt-1">Clients</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-all active:scale-95 duration-100" href="#">
+<span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
+<span class="font-label-sm text-label-sm mt-1">Wallet</span>
+</a>
+</nav>
+<!-- Floating Action Button (Mobile Only) -->
+<button class="md:hidden fixed bottom-24 right-4 bg-primary text-on-primary w-14 h-14 rounded-full flex items-center justify-center hard-shadow hard-shadow-active transition-transform z-40">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+</button>
+</body></html>

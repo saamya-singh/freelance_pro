@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FreelanceLedger | Financial Operating System for Indian Freelancers</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "primary-fixed": "#e5e2e1",
+                "primary-container": "#1c1b1b",
+                "surface-bright": "#fafaf5",
+                "surface-container-low": "#f4f4ef",
+                "surface-container-lowest": "#ffffff",
+                "primary": "#000000",
+                "surface-tint": "#5f5e5e",
+                "primary-fixed-dim": "#c8c6c5",
+                "rule-stroke": "#D1D1CB",
+                "on-primary-container": "#858383",
+                "on-background": "#1a1c19",
+                "on-tertiary": "#ffffff",
+                "secondary-fixed-dim": "#c7c6c6",
+                "on-tertiary-fixed-variant": "#464743",
+                "surface-container-highest": "#e2e3de",
+                "success-muted": "#4B5E40",
+                "secondary": "#5e5e5e",
+                "surface": "#fafaf5",
+                "on-error": "#ffffff",
+                "tertiary-container": "#1a1c18",
+                "surface-dim": "#dadad5",
+                "pencil-gray": "#666666",
+                "surface-ivory": "#F7F7F2",
+                "on-tertiary-container": "#83847f",
+                "tertiary": "#000000",
+                "on-primary-fixed": "#1c1b1b",
+                "inverse-primary": "#c8c6c5",
+                "tertiary-fixed": "#e3e3dd",
+                "on-secondary-fixed": "#1b1c1c",
+                "on-primary": "#ffffff",
+                "on-surface": "#1a1c19",
+                "error": "#ba1a1a",
+                "on-secondary-container": "#626262",
+                "on-primary-fixed-variant": "#474646",
+                "on-secondary": "#ffffff",
+                "on-tertiary-fixed": "#1a1c18",
+                "on-error-container": "#93000a",
+                "surface-container": "#eeeee9",
+                "warning-muted": "#8C733E",
+                "ink-black": "#111111",
+                "outline-variant": "#c4c7c7",
+                "on-secondary-fixed-variant": "#464747",
+                "surface-container-high": "#e8e8e4",
+                "inverse-surface": "#2f312e",
+                "secondary-fixed": "#e4e2e2",
+                "tertiary-fixed-dim": "#c7c7c1",
+                "on-surface-variant": "#444748",
+                "error-container": "#ffdad6",
+                "outline": "#747878",
+                "secondary-container": "#e1dfdf",
+                "inverse-on-surface": "#f1f1ec",
+                "surface-variant": "#e2e3de",
+                "background": "#fafaf5"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+        },
+        "spacing": {
+                "stack-md": "24px",
+                "margin-desktop": "48px",
+                "container-max": "1360px",
+                "stack-xl": "64px",
+                "stack-sm": "12px",
+                "gutter": "24px",
+                "margin-mobile": "20px",
+                "base": "8px"
+        },
+        "fontFamily": {
+                "display-lg-mobile": [
+                        "Satoshi", "sans-serif"
+                ],
+                "body-lg": [
+                        "Inter", "sans-serif"
+                ],
+                "headline-md": [
+                        "Satoshi", "sans-serif"
+                ],
+                "table-header": [
+                        "Satoshi", "sans-serif"
+                ],
+                "label-caps": [
+                        "Satoshi", "sans-serif"
+                ],
+                "data-metric": [
+                        "Satoshi", "sans-serif"
+                ],
+                "display-lg": [
+                        "Satoshi", "sans-serif"
+                ],
+                "headline-sm": [
+                        "Satoshi", "sans-serif"
+                ],
+                "body-md": [
+                        "Inter", "sans-serif"
+                ]
+        },
+        "fontSize": {
+                "display-lg-mobile": [
+                        "36px",
+                        {
+                                "lineHeight": "1.1",
+                                "letterSpacing": "-0.03em",
+                                "fontWeight": "900"
+                        }
+                ],
+                "body-lg": [
+                        "18px",
+                        {
+                                "lineHeight": "1.6",
+                                "fontWeight": "400"
+                        }
+                ],
+                "headline-md": [
+                        "28px",
+                        {
+                                "lineHeight": "1.2",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "700"
+                        }
+                ],
+                "table-header": [
+                        "13px",
+                        {
+                                "lineHeight": "1",
+                                "letterSpacing": "0.02em",
+                                "fontWeight": "700"
+                        }
+                ],
+                "label-caps": [
+                        "12px",
+                        {
+                                "lineHeight": "1",
+                                "letterSpacing": "0.08em",
+                                "fontWeight": "700"
+                        }
+                ],
+                "data-metric": [
+                        "40px",
+                        {
+                                "lineHeight": "1",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "900"
+                        }
+                ],
+                "display-lg": [
+                        "56px",
+                        {
+                                "lineHeight": "1.1",
+                                "letterSpacing": "-0.04em",
+                                "fontWeight": "900"
+                        }
+                ],
+                "headline-sm": [
+                        "20px",
+                        {
+                                "lineHeight": "1.3",
+                                "letterSpacing": "-0.01em",
+                                "fontWeight": "700"
+                        }
+                ],
+                "body-md": [
+                        "15px",
+                        {
+                                "lineHeight": "1.5",
+                                "fontWeight": "400"
+                        }
+                ]
+        }
+},
+    },
+  }
+</script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .swiss-border { border: 1px solid #c4c7c7; }
+        .swiss-border-b { border-bottom: 1px solid #c4c7c7; }
+        .swiss-border-t { border-top: 1px solid #c4c7c7; }
+        .swiss-border-l { border-left: 1px solid #c4c7c7; }
+        .swiss-border-r { border-right: 1px solid #c4c7c7; }
+        
+        .animation-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
+<script>
+        // Global State & Local Storage Initialization
+        const initializeStorage = () => {
+            if (!localStorage.getItem('freelanceLedgerData')) {
+                const initialData = {
+                    user: null,
+                    clients: [],
+                    workEntries: [],
+                    invoices: [],
+                    taxSettings: { regime: 'new', slabs: [] },
+                    settings: {}
+                };
+                localStorage.setItem('freelanceLedgerData', JSON.stringify(initialData));
+            }
+        };
+
+        const handleNavigation = () => {
+            const hash = window.location.hash || '#landing';
+            console.log(`Navigating to ${hash}`);
+            // Simple display toggle logic would go here for an SPA
+            // Currently setup for a single landing page view
+        };
+
+        window.addEventListener('load', () => {
+            initializeStorage();
+            handleNavigation();
+        });
+        window.addEventListener('hashchange', handleNavigation);
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background min-h-screen antialiased selection:bg-primary selection:text-on-primary">
+<!-- Top Navigation (Landing Context, Not App Shell) -->
+<header class="w-full sticky top-0 z-50 bg-background/80 backdrop-blur-md swiss-border-b h-16 flex items-center justify-between px-margin-mobile md:px-margin-desktop">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="account_balance_wallet" data-weight="fill">account_balance_wallet</span>
+<span class="font-headline-md text-headline-md text-primary tracking-tight">FreelanceLedger</span>
+</div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="font-body-md text-body-md text-secondary hover:text-primary transition-colors" href="#features">Features</a>
+<a class="font-body-md text-body-md text-secondary hover:text-primary transition-colors" href="#pricing">Pricing</a>
+<a class="font-body-md text-body-md text-primary font-semibold" href="#login">Sign In</a>
+<a class="bg-primary text-on-primary px-4 py-2 font-body-md text-body-md hover:opacity-90 transition-opacity flex items-center gap-2" href="#signup">
+                Get Started
+                <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</a>
+</nav>
+<button class="md:hidden text-primary">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+</header>
+<main class="relative">
+<!-- Hero Section -->
+<section class="relative min-h-[795px] flex flex-col items-center justify-center overflow-hidden px-margin-mobile md:px-margin-desktop py-stack-lg">
+<!-- Animated Shader Background Container -->
+<div class="absolute inset-0 z-0 opacity-40 pointer-events-none">
+</div>
+<!-- Solid Background Fallback/Overlay to ensure text readability -->
+<div class="absolute inset-0 z-0 bg-gradient-to-b from-transparent to-background"></div>
+<div class="relative z-10 max-w-container-max w-full grid grid-cols-1 lg:grid-cols-12 gap-gutter items-center">
+<!-- Hero Copy -->
+<div class="lg:col-span-6 flex flex-col items-start gap-stack-md text-left pt-12 lg:pt-0">
+<h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-primary text-balance">
+                        Do the work.<br/>
+                        Own the numbers.<br/>
+                        Grow with clarity.
+                    </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-[480px]">
+                        FreelanceLedger brings clients, billable work, invoices, payments and tax estimates into one beautifully simple workspace designed for the modern Indian independent.
+                    </p>
+<div class="flex flex-col sm:flex-row gap-4 mt-4 w-full sm:w-auto">
+<button class="bg-primary text-on-primary px-6 py-4 font-body-md text-body-md flex items-center justify-between sm:justify-center gap-3 hover:opacity-90 transition-opacity">
+                            Explore FreelanceLedger
+                            <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<button class="bg-transparent border border-outline px-6 py-4 font-body-md text-body-md text-primary flex items-center justify-center gap-2 hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-[20px]">play_circle</span>
+                            See how it works
+                        </button>
+</div>
+</div>
+<!-- Hero Visual - Miniature Dashboard -->
+<div class="lg:col-span-6 mt-12 lg:mt-0 relative w-full h-[500px] flex items-center justify-center perspective-1000">
+<div class="w-full max-w-[500px] bg-surface-lowest border border-outline-variant p-6 animation-float relative z-10 shadow-[8px_8px_0px_rgba(0,0,0,0.05)] bg-white">
+<!-- Mini Header -->
+<div class="flex justify-between items-center pb-4 border-b border-outline-variant mb-6">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<span class="font-label-caps text-label-caps text-secondary uppercase">Dashboard Preview</span>
+</div>
+<span class="material-symbols-outlined text-outline">more_horiz</span>
+</div>
+<!-- Metrics Grid -->
+<div class="grid grid-cols-2 gap-4 mb-6">
+<div class="p-4 border border-outline-variant bg-surface-bright">
+<p class="font-label-caps text-label-caps text-secondary mb-2 uppercase">YTD Revenue</p>
+<p class="font-data-metric text-data-metric text-primary">₹4,82,500</p>
+</div>
+<div class="p-4 border border-outline-variant bg-surface-bright relative overflow-hidden">
+<div class="absolute right-0 top-0 w-12 h-full bg-gradient-to-l from-surface-container-highest/20 to-transparent"></div>
+<p class="font-label-caps text-label-caps text-secondary mb-2 uppercase">Outstanding</p>
+<p class="font-data-metric text-data-metric text-primary">₹1,24,000</p>
+</div>
+</div>
+<!-- Tax Est -->
+<div class="p-4 border border-outline-variant bg-surface flex justify-between items-end mb-6">
+<div>
+<p class="font-label-caps text-label-caps text-secondary mb-1 uppercase">Est. Tax Liability (New Regime)</p>
+<p class="font-headline-md text-headline-md text-primary">₹24,500</p>
+</div>
+<span class="material-symbols-outlined text-secondary">trending_up</span>
+</div>
+<!-- Recent Activity Fake Table -->
+<div class="border-t border-outline-variant pt-4">
+<div class="flex justify-between items-center py-2 border-b border-outline-variant/50">
+<span class="font-table-header text-table-header text-primary">INV-2023-04</span>
+<span class="font-table-header text-table-header text-secondary">₹45,000</span>
+<span class="font-table-header text-table-header text-primary px-2 py-1 bg-surface-container-high">Paid</span>
+</div>
+<div class="flex justify-between items-center py-2 border-b border-outline-variant/50">
+<span class="font-table-header text-table-header text-primary">INV-2023-05</span>
+<span class="font-table-header text-table-header text-secondary">₹12,000</span>
+<span class="font-table-header text-table-header text-secondary px-2 py-1 border border-outline-variant">Sent</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Product Explainer Section (Editorial Bento Grid) -->
+<section class="py-24 px-margin-mobile md:px-margin-desktop bg-surface" id="features">
+<div class="max-w-container-max mx-auto">
+<div class="mb-16">
+<h2 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-primary max-w-2xl">
+                        A systematic approach to independent business.
+                    </h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0 border-t border-l border-outline-variant">
+<!-- Feature 1 -->
+<div class="p-8 border-b border-r border-outline-variant bg-surface hover:bg-surface-bright transition-colors group">
+<div class="font-data-metric text-data-metric text-outline-variant mb-6 group-hover:text-primary transition-colors">01</div>
+<h3 class="font-headline-md text-headline-md text-primary mb-3">Clients</h3>
+<p class="font-body-md text-body-md text-secondary">Maintain a clean directory of your clients, their GST details, and preferred billing cycles. No more digging through emails.</p>
+</div>
+<!-- Feature 2 -->
+<div class="p-8 border-b border-r border-outline-variant bg-surface hover:bg-surface-bright transition-colors group">
+<div class="font-data-metric text-data-metric text-outline-variant mb-6 group-hover:text-primary transition-colors">02</div>
+<h3 class="font-headline-md text-headline-md text-primary mb-3">Work</h3>
+<p class="font-body-md text-body-md text-secondary">Log billable hours, fixed-fee milestones, or retainers. Tie every unit of work directly to a client ready for invoicing.</p>
+</div>
+<!-- Feature 3 -->
+<div class="p-8 border-b border-r border-outline-variant bg-surface hover:bg-surface-bright transition-colors group">
+<div class="font-data-metric text-data-metric text-outline-variant mb-6 group-hover:text-primary transition-colors">03</div>
+<h3 class="font-headline-md text-headline-md text-primary mb-3">Invoice</h3>
+<p class="font-body-md text-body-md text-secondary">Generate compliant, beautiful invoices instantly from unbilled work. Track states from Draft to Paid with a glance.</p>
+</div>
+<!-- Feature 4 -->
+<div class="p-8 border-b border-r border-outline-variant bg-surface hover:bg-surface-bright transition-colors group">
+<div class="font-data-metric text-data-metric text-outline-variant mb-6 group-hover:text-primary transition-colors">04</div>
+<h3 class="font-headline-md text-headline-md text-primary mb-3">Payment</h3>
+<p class="font-body-md text-body-md text-secondary">Reconcile bank deposits with issued invoices. See exactly who owes what, and how long they've been outstanding.</p>
+</div>
+<!-- Feature 5 -->
+<div class="p-8 border-b border-r border-outline-variant bg-surface hover:bg-surface-bright transition-colors group">
+<div class="font-data-metric text-data-metric text-outline-variant mb-6 group-hover:text-primary transition-colors">05</div>
+<h3 class="font-headline-md text-headline-md text-primary mb-3">Tax</h3>
+<p class="font-body-md text-body-md text-secondary">Real-time estimations based on the latest Indian tax slabs. Know exactly how much to set aside before advance tax deadlines.</p>
+</div>
+<!-- Feature 6 -->
+<div class="p-8 border-b border-r border-outline-variant bg-primary text-on-primary group flex flex-col justify-between">
+<div>
+<div class="font-data-metric text-data-metric text-on-primary/50 mb-6">06</div>
+<h3 class="font-headline-md text-headline-md mb-3">Profit</h3>
+<p class="font-body-md text-body-md text-on-primary/80">The ultimate view of your financial health. Understand your true runway and net margins after tax.</p>
+</div>
+<div class="mt-8">
+<span class="material-symbols-outlined text-[32px]">monitoring</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Final CTA -->
+<section class="py-32 px-margin-mobile md:px-margin-desktop bg-background border-t border-outline-variant">
+<div class="max-w-container-max mx-auto flex flex-col items-center text-center">
+<h2 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-8 max-w-3xl">
+                    Ready to bring order to your independent practice?
+                </h2>
+<button class="bg-primary text-on-primary px-8 py-4 font-body-md text-body-md flex items-center justify-center gap-3 hover:opacity-90 transition-opacity text-lg">
+                    Start using FreelanceLedger
+                    <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</section>
+</main>
+<footer class="border-t border-outline-variant py-8 px-margin-mobile md:px-margin-desktop bg-surface text-secondary font-body-md text-body-md">
+<div class="max-w-container-max mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+<div>© 2024 FreelanceLedger. Built for India.</div>
+<div class="flex gap-6">
+<a class="hover:text-primary" href="#">Privacy</a>
+<a class="hover:text-primary" href="#">Terms</a>
+<a class="hover:text-primary" href="#">Support</a>
+</div>
+</div>
+</footer>
+</body></html>

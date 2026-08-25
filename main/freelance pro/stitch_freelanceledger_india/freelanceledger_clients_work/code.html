@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Clients &amp; Work - FreelanceLedger</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        @import url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Inter:wght@100..900&display=swap');
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed-variant": "#464747",
+                        "surface-container-highest": "#e2e3de",
+                        "on-secondary-fixed": "#1b1c1c",
+                        "on-tertiary-fixed": "#1b1c17",
+                        "on-primary": "#ffffff",
+                        "on-primary-fixed-variant": "#474646",
+                        "tertiary-container": "#1b1c17",
+                        "secondary-container": "#e1dfdf",
+                        "on-surface-variant": "#444748",
+                        "surface-bright": "#fafaf5",
+                        "on-error-container": "#93000a",
+                        "inverse-primary": "#c8c6c5",
+                        "surface-container": "#eeeee9",
+                        "on-surface": "#1a1c19",
+                        "primary-container": "#1c1b1b",
+                        "surface": "#fafaf5",
+                        "background": "#fafaf5",
+                        "on-secondary-container": "#626262",
+                        "on-primary-fixed": "#1c1b1b",
+                        "secondary-fixed": "#e4e2e2",
+                        "inverse-surface": "#2f312e",
+                        "primary": "#000000",
+                        "surface-container-high": "#e8e8e4",
+                        "outline": "#747878",
+                        "inverse-on-surface": "#f1f1ec",
+                        "secondary": "#5e5e5e",
+                        "surface-tint": "#5f5e5e",
+                        "tertiary-fixed-dim": "#c7c7bf",
+                        "primary-fixed": "#e5e2e1",
+                        "surface-container-low": "#f4f4ef",
+                        "on-tertiary-container": "#84847e",
+                        "surface-dim": "#dadad5",
+                        "on-primary-container": "#858383",
+                        "tertiary": "#000000",
+                        "on-background": "#1a1c19",
+                        "outline-variant": "#c4c7c7",
+                        "on-tertiary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed": "#e4e3db",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed-variant": "#464742",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-fixed-dim": "#c7c6c6",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed-dim": "#c8c6c5",
+                        "error": "#ba1a1a",
+                        "surface-variant": "#e2e3de"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-desktop": "40px",
+                        "margin-mobile": "16px",
+                        "stack-lg": "48px",
+                        "stack-md": "24px",
+                        "container-max": "1280px",
+                        "gutter": "24px",
+                        "stack-sm": "8px",
+                        "unit": "8px"
+                    },
+                    "fontFamily": {
+                        "display-lg-mobile": ["Geist"],
+                        "label-caps": ["Geist"],
+                        "data-metric": ["Geist"],
+                        "headline-md": ["Geist"],
+                        "table-cell": ["Inter"],
+                        "display-lg": ["Geist"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "display-lg-mobile": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-caps": ["12px", { "lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "data-metric": ["36px", { "lineHeight": "1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "table-cell": ["13px", { "lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "400" }],
+                        "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400" }],
+                        "body-md": ["14px", { "lineHeight": "1.5", "letterSpacing": "0", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md antialiased h-screen flex overflow-hidden">
+<!-- NavigationDrawer (Web) -->
+<nav class="hidden md:flex flex-col h-full w-[280px] fixed left-0 top-0 z-50 bg-surface dark:bg-surface-dim border-r border-outline-variant py-stack-md px-4 transition-all duration-200 ease-in-out">
+<div class="mb-stack-lg px-2">
+<h1 class="font-display-lg text-display-lg-mobile text-primary tracking-tighter">FreelanceLedger</h1>
+</div>
+<div class="flex items-center gap-3 mb-stack-md px-2">
+<div class="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden shrink-0 border border-outline-variant">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="A clean, minimalist avatar image of a professional freelancer against a neutral background. The lighting is soft and studio-quality, emphasizing a modern SaaS aesthetic. Deep blacks and pristine whites with subtle monochromatic tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNIHifzU6uVHaf2UoACBW_J0xtqbzERQ86RnVRG5gx7RWZmMKUkpppdgdNiQKvqQd9-sQx1lmE7J8G6rM8Zoj9fx7QG0Q08vZsdlF7_2wvK91aA_ngi0Xs8oHxDEdvr8tbieBzfCXX_CrYwzEfErWS2nSiVx61yObzxE8vidFwvqeckSVYGi4vIUjR4beBZkcamN6sk_Wmtk8R0Ej63ZXiq_xdv4VQoU4q9ssMUFsaK6u9F9T47-C6"/>
+</div>
+<div class="overflow-hidden">
+<div class="font-body-md text-primary truncate">Ankit Sharma</div>
+<div class="font-label-caps text-secondary truncate">Pro Freelancer</div>
+<div class="font-label-caps text-secondary truncate mt-1">₹12,40,000 YTD</div>
+</div>
+</div>
+<ul class="flex-1 space-y-2 mt-4">
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded-DEFAULT text-secondary hover:bg-surface-container-low transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded-DEFAULT bg-primary-container text-on-primary-container font-semibold border-r-2 border-primary transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="group" style="font-variation-settings: 'FILL' 1;">group</span>
+<span>Clients</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded-DEFAULT text-secondary hover:bg-surface-container-low transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="receipt_long">receipt_long</span>
+<span>Invoices</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded-DEFAULT text-secondary hover:bg-surface-container-low transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="account_balance_wallet">account_balance_wallet</span>
+<span>Tax Central</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded-DEFAULT text-secondary hover:bg-surface-container-low transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="account_balance">account_balance</span>
+<span>Banking</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded-DEFAULT text-secondary hover:bg-surface-container-low transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+</li>
+</ul>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col md:ml-[280px] h-full overflow-hidden">
+<!-- TopAppBar (Mobile & Web) -->
+<header class="w-full sticky top-0 z-40 bg-background flex items-center justify-between px-margin-mobile md:px-margin-desktop h-16 border-b border-outline-variant md:border-b-0">
+<div class="flex items-center gap-4 md:hidden">
+<button class="text-primary hover:bg-surface-container-low p-2 rounded-full active:opacity-80 transition-opacity">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<h1 class="font-headline-md text-headline-md text-primary font-bold">FreelanceLedger</h1>
+</div>
+<div class="hidden md:flex flex-1 items-center justify-between">
+<h2 class="font-headline-md text-headline-md text-primary font-bold">Clients</h2>
+<button class="text-primary hover:bg-surface-container-low p-2 rounded-full active:opacity-80 transition-opacity">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+</div>
+<button class="md:hidden text-primary hover:bg-surface-container-low p-2 rounded-full active:opacity-80 transition-opacity">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+</header>
+<!-- Canvas -->
+<div class="flex-1 overflow-y-auto px-margin-mobile md:px-margin-desktop py-stack-md pb-24 md:pb-stack-md">
+<!-- Controls -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-stack-md">
+<div class="flex items-center gap-2 border border-outline-variant rounded-DEFAULT p-1 bg-surface w-max">
+<button class="px-4 py-1.5 text-table-cell font-table-cell bg-primary text-on-primary rounded-DEFAULT">All</button>
+<button class="px-4 py-1.5 text-table-cell font-table-cell text-secondary hover:bg-surface-container-low rounded-DEFAULT">Active</button>
+<button class="px-4 py-1.5 text-table-cell font-table-cell text-secondary hover:bg-surface-container-low rounded-DEFAULT">Inactive</button>
+</div>
+<button class="bg-primary text-on-primary font-label-caps text-label-caps px-4 py-2 rounded-DEFAULT flex items-center gap-2 hover:opacity-90 transition-opacity w-full md:w-auto justify-center">
+<span class="material-symbols-outlined text-[16px]">add</span>
+                    ADD CLIENT
+                </button>
+</div>
+<!-- Client Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Card 1 -->
+<div class="border border-outline-variant bg-surface rounded-lg p-6 group hover:border-primary transition-colors flex flex-col justify-between min-h-[200px]">
+<div>
+<div class="flex justify-between items-start mb-4">
+<div>
+<h3 class="font-headline-md text-body-lg font-semibold text-primary">Acme Corp</h3>
+<p class="font-body-md text-secondary">Contact: Jane Doe</p>
+</div>
+<span class="px-2 py-1 bg-surface-container-high text-primary font-label-caps text-[10px] rounded-DEFAULT">ACTIVE</span>
+</div>
+<div class="grid grid-cols-2 gap-4 mt-6">
+<div>
+<div class="font-label-caps text-secondary mb-1">UNBILLED</div>
+<div class="font-table-cell text-primary">₹45,000</div>
+</div>
+<div>
+<div class="font-label-caps text-secondary mb-1">LAST INVOICE</div>
+<div class="font-table-cell text-primary">12 Oct 2023</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Empty State (Demonstration) -->
+<div class="border border-outline-variant border-dashed bg-surface-container-lowest rounded-lg p-6 flex flex-col items-center justify-center text-center min-h-[200px]">
+<span class="material-symbols-outlined text-secondary text-[32px] mb-2" style="font-variation-settings: 'wght' 200;">add_business</span>
+<h3 class="font-body-lg text-primary mb-1">Add more clients</h3>
+<p class="font-body-md text-secondary">Expand your ledger to see them here.</p>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile) -->
+<nav class="fixed bottom-0 w-full z-50 md:hidden bg-surface dark:bg-surface-dim border-t border-outline-variant flex justify-around items-center h-16 pb-safe">
+<a class="flex flex-col items-center justify-center text-secondary dark:text-secondary-fixed-dim active:bg-surface-container-highest scale-95 transition-transform duration-100 p-2 rounded-lg w-16" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-caps text-label-caps mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-secondary dark:text-secondary-fixed-dim active:bg-surface-container-highest scale-95 transition-transform duration-100 p-2 rounded-lg w-16" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span class="font-label-caps text-label-caps mt-1">Ledger</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary dark:text-on-primary-fixed font-bold active:bg-surface-container-highest scale-95 transition-transform duration-100 p-2 rounded-lg w-16" href="#">
+<span class="material-symbols-outlined" data-icon="group" style="font-variation-settings: 'FILL' 1;">group</span>
+<span class="font-label-caps text-label-caps mt-1">Clients</span>
+</a>
+<a class="flex flex-col items-center justify-center text-secondary dark:text-secondary-fixed-dim active:bg-surface-container-highest scale-95 transition-transform duration-100 p-2 rounded-lg w-16" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-caps text-label-caps mt-1">Profile</span>
+</a>
+</nav>
+</body></html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Client Details — FreelancePro</title>
+  
+  <link rel="stylesheet" href="../css/global.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: ['class', '[data-theme="dark"]'],
+      theme: {
+        extend: {
+          colors: {
+            brandBlue: { 500: '#3B82F6', 600: '#2563EB', 700: '#1D4ED8' }
+          },
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <script src="../js/core/theme.js"></script>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-50 antialiased transition-colors duration-200">
+
+  <div class="flex min-h-screen">
+    <aside id="app-sidebar"></aside>
+
+    <main class="flex-1 md:ml-[250px] flex flex-col min-w-0 pb-12">
+      <header id="app-header"></header>
+
+      <div class="p-6 md:p-8 max-w-7xl w-full mx-auto space-y-6 animate-fade-in-up">
+        <div>
+          <a href="clients.html" class="text-xs font-bold text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1">
+            ← Back to Clients Directory
+          </a>
+        </div>
+
+        <!-- Client Profile Header Card -->
+        <div id="client-detail-header-card" class="bg-white dark:bg-slate-900 border-2 border-slate-900 dark:border-slate-800 rounded-3xl p-8 shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] card-hover-effect"></div>
+
+        <!-- KPI Grid -->
+        <div id="client-detail-kpis" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+
+        <!-- Linked Sections -->
+        <div class="space-y-6">
+          <div class="bg-white dark:bg-slate-900 border-2 border-slate-900 dark:border-slate-800 rounded-3xl p-6 shadow-[3px_3px_0px_0px_rgba(15,23,42,1)]">
+            <h3 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-4">Linked Work Entries</h3>
+            <div id="client-work-table-container"></div>
+          </div>
+
+          <div class="bg-white dark:bg-slate-900 border-2 border-slate-900 dark:border-slate-800 rounded-3xl p-6 shadow-[3px_3px_0px_0px_rgba(15,23,42,1)]">
+            <h3 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-4">Issued Invoices</h3>
+            <div id="client-invoices-table-container"></div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Core Scripts -->
+  <script src="../js/data/demo-data.js"></script>
+  <script src="../js/data/tax-slabs.js"></script>
+  <script src="../js/core/storage.js"></script>
+  <script src="../js/core/utils.js"></script>
+  <script src="../js/core/validators.js"></script>
+  <script src="../js/core/notifications.js"></script>
+  <script src="../js/core/auth.js"></script>
+  <script src="../js/core/state.js"></script>
+  <script src="../js/core/router.js"></script>
+  <script src="../js/components/sidebar.js"></script>
+  <script src="../js/components/header.js"></script>
+  <script src="../js/components/modal.js"></script>
+  <script src="../js/components/confirm-dialog.js"></script>
+  <script src="../js/components/table.js"></script>
+  <script src="../js/components/command-palette.js"></script>
+  <script src="../js/core/app.js"></script>
+
+  <script src="../js/pages/client-detail.js"></script>
+</body>
+</html>

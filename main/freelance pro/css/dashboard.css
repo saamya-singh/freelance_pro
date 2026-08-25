@@ -1,0 +1,201 @@
+/* ============================================================
+   DASHBOARD STYLES - FINANCIAL METRICS & DARK MODE
+   ============================================================ */
+
+.dashboard-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.metric-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-card);
+  position: relative;
+  overflow: hidden;
+  transition: var(--transition-theme);
+}
+
+.metric-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: transparent;
+}
+
+.metric-card.revenue::before { background: var(--secondary-accent); }
+.metric-card.outstanding::before { background: var(--status-warning-text); }
+.metric-card.tax::before { background: var(--primary-accent); }
+.metric-card.net::before { background: var(--status-success-text); }
+
+.metric-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.metric-title {
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+}
+
+.metric-value {
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: var(--text-primary);
+  font-feature-settings: "tnum";
+  margin-bottom: 0.35rem;
+  line-height: 1.1;
+}
+
+.metric-sub {
+  font-size: 0.8rem;
+  color: var(--text-tertiary);
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+/* Dashboard Charts Grid */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.chart-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.chart-filter-group {
+  display: flex;
+  gap: 0.25rem;
+  background: var(--bg-canvas);
+  padding: 0.25rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-color);
+}
+
+.chart-filter-btn {
+  padding: 0.25rem 0.65rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: var(--radius-pill);
+  color: var(--text-secondary);
+}
+
+.chart-filter-btn.active {
+  background: var(--primary-accent);
+  color: #FFFFFF;
+  box-shadow: var(--shadow-subtle);
+}
+
+.chart-container {
+  flex: 1;
+  min-height: 280px;
+  position: relative;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+/* Invoice Health Segmented Bar */
+.health-segmented-bar {
+  height: 14px;
+  display: flex;
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+  margin: 1.5rem 0 1rem 0;
+  background: var(--bg-canvas);
+  border: 1px solid var(--border-color);
+}
+
+.health-segment {
+  height: 100%;
+  transition: width var(--transition-normal);
+}
+
+.health-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.health-legend-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+}
+
+.health-legend-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.health-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+/* Recent Activity List */
+.activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.activity-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.activity-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.activity-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--bg-canvas);
+  border: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-accent);
+  flex-shrink: 0;
+}
+
+.activity-content { flex: 1; }
+
+.activity-desc {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.15rem;
+}
+
+.activity-time {
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+}

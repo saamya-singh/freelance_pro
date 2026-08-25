@@ -1,0 +1,152 @@
+/* ============================================================
+   FREELANCEPRO - GLOBAL TAILWIND & ANIMATION CSS
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,700;1,800&family=JetBrains Mono:wght@400;500;600;700&display=swap');
+
+:root {
+  --bg-canvas: #F8FAFC;
+  --bg-card: #FFFFFF;
+  --text-primary: #0F172A;
+  --border-color: #0F172A;
+  --primary-accent: #2563EB;
+  --secondary-accent: #84CC16;
+}
+
+html[data-theme="dark"] {
+  --bg-canvas: #0B0F19;
+  --bg-card: #111827;
+  --text-primary: #F9FAFB;
+  --border-color: #374151;
+  --primary-accent: #3B82F6;
+  --secondary-accent: #A3E635;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--bg-canvas);
+  color: var(--text-primary);
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1), color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  min-height: 100vh;
+}
+
+/* Smooth Page Entrance & Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 20px 4px rgba(37, 99, 235, 0.6);
+  }
+}
+
+@keyframes floatSmooth {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-4px); }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-float {
+  animation: floatSmooth 3s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 2.5s infinite;
+}
+
+.card-hover-effect {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-hover-effect:hover {
+  transform: translateY(-3px);
+  box-shadow: 5px 5px 0px 0px #0F172A;
+}
+
+html[data-theme="dark"] .card-hover-effect:hover {
+  box-shadow: 5px 5px 0px 0px #F9FAFB;
+}
+
+/* Neo-Pop Offset Shadows */
+.neo-shadow {
+  box-shadow: 3px 3px 0px 0px #0F172A;
+}
+
+html[data-theme="dark"] .neo-shadow {
+  box-shadow: 3px 3px 0px 0px #F9FAFB;
+}
+
+.neo-border {
+  border: 2px solid #0F172A;
+}
+
+html[data-theme="dark"] .neo-border {
+  border: 2px solid #374151;
+}
+
+/* Custom Utilities */
+.glass-effect {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Modal Backdrop */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  animation: fadeInUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+
+/* Advanced Animations */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes rotateIn {
+  from { opacity: 0; transform: rotate(-10deg); }
+  to { opacity: 1; transform: rotate(0deg); }
+}
+@keyframes scaleUp {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+.animate-slide-up { animation: slideUp 0.6s ease-out forwards; }
+.animate-rotate-in { animation: rotateIn 0.6s ease-out forwards; }
+.animate-scale-up { animation: scaleUp 0.6s ease-out forwards; }
+/* Hover tilt and soft pulse utilities */
+.tilt-hover:hover { animation: rotateIn 0.4s ease-out forwards; }
+.pulse-soft { animation: pulseGlow 1.5s ease-in-out infinite; }
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  .animate-slide-up, .animate-rotate-in, .animate-scale-up, .animate-float, .animate-pulse-glow, .pulse-soft { animation: none; }
+}
+
+@media print {
+  body { background: #FFF !important; color: #000 !important; }
+  .no-print, sidebar, #app-sidebar, #app-header, .mobile-bottom-nav { display: none !important; }
+  .app-main { margin-left: 0 !important; }
+  .app-content { padding: 0 !important; }
+  .invoice-document { border: none !important; box-shadow: none !important; padding: 0 !important; width: 100% !important; }
+}
