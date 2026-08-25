@@ -17,6 +17,7 @@ const Auth = {
   isAuthenticated() {
     return !!this.getCurrentUser();
   },
+   //improved pass validation
 
   // Login with Email & Password
   login(email, password, rememberMe = true) {
