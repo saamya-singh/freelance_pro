@@ -1,0 +1,108 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "FreelanceLedger API",
+    "version": "1.0.0",
+    "description": "MongoDB-backed API for accounts and freelancer workspaces. Authentication uses the ledger_session cookie returned by signup or login. Swagger UI retains this cookie automatically."
+  },
+  "servers": [{ "url": "/api", "description": "Current Express server" }],
+  "tags": [
+    { "name": "System" },
+    { "name": "Authentication" },
+    { "name": "Workspace" },
+    { "name": "Resources" }
+  ],
+  "paths": {
+    "/health": {
+      "get": {
+        "tags": ["System"], "summary": "Check API health",
+        "responses": { "200": { "description": "API is running", "content": { "application/json": { "example": { "status": "ok" } } } } }
+      }
+    },
+    "/auth/signup": {
+      "post": {
+        "tags": ["Authentication"], "summary": "Create an account and session",
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Signup" }, "example": { "name": "API Test User", "email": "test@example.com", "password": "ApiTest123!" } } } },
+        "responses": { "200": { "$ref": "#/components/responses/User" }, "400": { "$ref": "#/components/responses/Error" }, "409": { "$ref": "#/components/responses/Error" } }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": ["Authentication"], "summary": "Create a session",
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Login" }, "example": { "email": "rahul@freelancedger.in", "password": "Password123!" } } } },
+        "responses": { "200": { "$ref": "#/components/responses/User" }, "401": { "$ref": "#/components/responses/Error" } }
+      }
+    },
+    "/auth/demo": {
+      "post": { "tags": ["Authentication"], "summary": "Sign in to the demo account", "responses": { "200": { "$ref": "#/components/responses/User" } } }
+    },
+    "/auth/me": {
+      "get": { "tags": ["Authentication"], "summary": "Get the signed-in user", "security": [{ "cookieAuth": [] }], "responses": { "200": { "$ref": "#/components/responses/User" }, "401": { "$ref": "#/components/responses/Error" } } }
+    },
+    "/auth/logout": {
+      "post": { "tags": ["Authentication"], "summary": "Delete the current session", "security": [{ "cookieAuth": [] }], "responses": { "200": { "description": "Logged out", "content": { "application/json": { "example": { "success": true } } } }, "401": { "$ref": "#/components/responses/Error" } } }
+    },
+    "/workspace": {
+      "get": { "tags": ["Workspace"], "summary": "Get the complete workspace", "security": [{ "cookieAuth": [] }], "responses": { "200": { "$ref": "#/components/responses/Workspace" }, "401": { "$ref": "#/components/responses/Error" } } },
+      "put": {
+        "tags": ["Workspace"], "summary": "Import or replace workspace resources", "security": [{ "cookieAuth": [] }],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Workspace" }, "example": { "clients": [], "work": [], "invoices": [], "payments": [], "activities": [] } } } },
+        "responses": { "200": { "$ref": "#/components/responses/Workspace" }, "400": { "$ref": "#/components/responses/Error" }, "401": { "$ref": "#/components/responses/Error" } }
+      },
+      "delete": { "tags": ["Workspace"], "summary": "Clear business records", "security": [{ "cookieAuth": [] }], "responses": { "200": { "$ref": "#/components/responses/Workspace" }, "401": { "$ref": "#/components/responses/Error" } } }
+    },
+    "/clients": { "$ref": "#/components/pathItems/ArrayResource" },
+    "/work": { "$ref": "#/components/pathItems/ArrayResource" },
+    "/invoices": { "$ref": "#/components/pathItems/ArrayResource" },
+    "/payments": { "$ref": "#/components/pathItems/ArrayResource" },
+    "/activities": { "$ref": "#/components/pathItems/ArrayResource" },
+    "/settings": { "$ref": "#/components/pathItems/ObjectResource" },
+    "/taxSettings": { "$ref": "#/components/pathItems/ObjectResource" }
+  },
+  "components": {
+    "securitySchemes": {
+      "cookieAuth": { "type": "apiKey", "in": "cookie", "name": "ledger_session" }
+    },
+    "schemas": {
+      "Signup": {
+        "type": "object", "required": ["name", "email", "password"],
+        "properties": { "name": { "type": "string" }, "email": { "type": "string", "format": "email" }, "password": { "type": "string", "minLength": 8, "format": "password" } }
+      },
+      "Login": {
+        "type": "object", "required": ["email", "password"],
+        "properties": { "email": { "type": "string", "format": "email" }, "password": { "type": "string", "format": "password" } }
+      },
+      "User": {
+        "type": "object", "properties": { "id": { "type": "string" }, "name": { "type": "string" }, "email": { "type": "string", "format": "email" } }
+      },
+      "Workspace": {
+        "type": "object", "required": ["clients", "invoices"],
+        "properties": {
+          "clients": { "type": "array", "items": { "type": "object", "additionalProperties": true } },
+          "work": { "type": "array", "items": { "type": "object", "additionalProperties": true } },
+          "invoices": { "type": "array", "items": { "type": "object", "additionalProperties": true } },
+          "payments": { "type": "array", "items": { "type": "object", "additionalProperties": true } },
+          "activities": { "type": "array", "items": { "type": "object", "additionalProperties": true } },
+          "settings": { "type": "object", "additionalProperties": true },
+          "taxSettings": { "type": "object", "additionalProperties": true }
+        }
+      },
+      "Error": { "type": "object", "properties": { "error": { "type": "string" } } }
+    },
+    "responses": {
+      "User": { "description": "Account and session created", "content": { "application/json": { "schema": { "type": "object", "properties": { "user": { "$ref": "#/components/schemas/User" } } } } } },
+      "Workspace": { "description": "Workspace data", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Workspace" } } } },
+      "Error": { "description": "Request failed", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } } }
+    },
+    "pathItems": {
+      "ArrayResource": {
+        "get": { "tags": ["Resources"], "summary": "Get the complete resource array", "security": [{ "cookieAuth": [] }], "responses": { "200": { "description": "Resource array", "content": { "application/json": { "schema": { "type": "array", "items": { "type": "object", "additionalProperties": true } } } } }, "401": { "$ref": "#/components/responses/Error" } } },
+        "put": { "tags": ["Resources"], "summary": "Replace the complete resource array", "security": [{ "cookieAuth": [] }], "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "array", "items": { "type": "object", "additionalProperties": true } }, "example": [] } } }, "responses": { "200": { "description": "Saved resource array" }, "400": { "$ref": "#/components/responses/Error" }, "401": { "$ref": "#/components/responses/Error" } } }
+      },
+      "ObjectResource": {
+        "get": { "tags": ["Resources"], "summary": "Get the resource object", "security": [{ "cookieAuth": [] }], "responses": { "200": { "description": "Resource object", "content": { "application/json": { "schema": { "type": "object", "additionalProperties": true } } } }, "401": { "$ref": "#/components/responses/Error" } } },
+        "put": { "tags": ["Resources"], "summary": "Replace the resource object", "security": [{ "cookieAuth": [] }], "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "additionalProperties": true }, "example": {} } } }, "responses": { "200": { "description": "Saved resource object" }, "400": { "$ref": "#/components/responses/Error" }, "401": { "$ref": "#/components/responses/Error" } } }
+      }
+    }
+  }
+}
