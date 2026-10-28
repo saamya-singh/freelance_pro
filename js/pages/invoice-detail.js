@@ -2,7 +2,7 @@
    INVOICE DETAIL PRINTABLE VIEW SCRIPT
    ============================================================ */
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('ledger-ready', () => {
   const params = Utils.getQueryParams();
   const invoiceId = params.id;
 

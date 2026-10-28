@@ -1,8 +1,8 @@
 /* ============================================================
-   WORK ENTRIES TRACKING & BILLABLE HOURS SCRIPT (TAILWIND REBUILD)
+   WORK ENTRIES TRACKING & BILLABLE HOURS SCRIPT
    ============================================================ */
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('ledger-ready', () => {
   const params = Utils.getQueryParams();
   let selectedClientId = params.clientId || 'all';
 
@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function renderWorkEntries() {
     let work = AppState.getWork();
+    const clients = AppState.getClients();
 
     if (selectedClientId !== 'all') {
       work = work.filter(w => w.clientId === selectedClientId);
@@ -57,31 +58,29 @@ document.addEventListener('DOMContentLoaded', () => {
       emptyTitle: 'No work entries logged',
       emptyDesc: 'Track billable hours and projects to convert them into invoices.',
       columns: [
-        { header: 'Date', render: (w) => `<span class="text-xs text-slate-500 font-medium">${Utils.formatDate(w.date)}</span>` },
-        { 
-          header: 'Client', 
-          render: (w) => {
-            const client = AppState.getClientById(w.clientId);
-            return `<span class="font-bold text-slate-900 dark:text-slate-100">${Utils.escapeHtml(client ? client.name : (w.clientName || 'Client'))}</span>`;
-          }
+        { header: 'Date', render: (w) => Utils.formatDate(w.date) },
+        { header: 'Client', render: (w) => `<strong>${Utils.escapeHtml(w.clientName)}</strong>` },
+        { header: 'Project', key: 'project' },
+        { header: 'Description', key: 'description' },
+        { header: 'Hours', render: (w) => `${w.hours} hrs` },
+        { header: 'Rate', render: (w) => `${Utils.formatCurrency(w.rate)}/hr` },
+        { header: 'Amount', render: (w) => `<span style="font-weight:700;">${Utils.formatCurrency(w.amount)}</span>` },
+        {
+          header: 'Billable',
+          render: (w) => `<span class="billable-tag ${w.billable ? 'billable' : 'non-billable'}">${w.billable ? 'Billable' : 'Non-Billable'}</span>`
         },
-        { header: 'Project', render: (w) => `<span class="font-semibold text-slate-800 dark:text-slate-200">${Utils.escapeHtml(w.project || w.projectName || '-')}</span>` },
-        { header: 'Description', render: (w) => `<span class="text-xs text-slate-500">${Utils.escapeHtml(w.description || '-')}</span>` },
-        { header: 'Hours', render: (w) => `<span class="font-mono text-xs">${w.hours} hrs</span>` },
-        { header: 'Rate', render: (w) => `<span class="font-mono text-xs">${Utils.formatCurrency(w.rate || w.hourlyRate)}/hr</span>` },
-        { header: 'Amount', render: (w) => `<span class="font-extrabold text-sm font-mono text-slate-900 dark:text-slate-100">${Utils.formatCurrency(w.amount)}</span>` },
         {
           header: 'Status',
-          render: (w) => `<span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase ${w.status === 'invoiced' ? 'bg-blue-100 dark:bg-blue-950 text-blue-600 dark:text-blue-400 border border-blue-200' : 'bg-amber-100 dark:bg-amber-950 text-amber-600 border border-amber-200'}">${w.status}</span>`
+          render: (w) => `<span class="badge ${w.status === 'invoiced' ? 'badge-info' : 'badge-warning'}">${w.status}</span>`
         },
         {
           header: 'Actions',
-          style: 'text-right',
+          style: 'text-align:right;',
           render: (w) => `
-            <div class="flex items-center justify-end gap-2">
-              ${w.status === 'unbilled' ? `<button class="convert-inv-btn px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-[11px] font-extrabold rounded-full transition-all border border-slate-900 shadow-sm" data-id="${w.id}">Invoice</button>` : ''}
-              <button class="edit-work-btn p-1 text-slate-400 hover:text-blue-600 rounded-full" data-id="${w.id}" title="Edit">✏️</button>
-              <button class="delete-work-btn p-1 text-slate-400 hover:text-red-600 rounded-full" data-id="${w.id}" title="Delete">🗑️</button>
+            <div class="table-actions">
+              ${w.status === 'unbilled' && w.billable ? `<button class="btn btn-primary btn-sm convert-inv-btn" data-id="${w.id}">Convert to Invoice</button>` : ''}
+              <button class="btn btn-secondary btn-sm edit-work-btn" data-id="${w.id}">Edit</button>
+              <button class="btn btn-danger btn-sm delete-work-btn" data-id="${w.id}">Delete</button>
             </div>
           `
         }
@@ -90,43 +89,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Action button handlers
     const container = document.getElementById('work-table-container');
-    if (container) {
-      container.querySelectorAll('.edit-work-btn').forEach(btn => {
-        btn.onclick = (e) => {
-          e.stopPropagation();
-          const id = btn.getAttribute('data-id');
-          const entry = work.find(w => w.id === id);
-          if (entry) openWorkModal(entry);
-        };
-      });
 
-      container.querySelectorAll('.delete-work-btn').forEach(btn => {
-        btn.onclick = (e) => {
-          e.stopPropagation();
-          const id = btn.getAttribute('data-id');
-          const entry = work.find(w => w.id === id);
-          if (entry) {
-            ConfirmDialog.show(
-              'Delete Work Entry',
-              `Are you sure you want to delete this work entry?`,
-              'Delete Entry',
-              () => deleteWork(id)
-            );
-          }
-        };
-      });
+    container.querySelectorAll('.edit-work-btn').forEach(btn => {
+      btn.onclick = (e) => {
+        e.stopPropagation();
+        const id = btn.getAttribute('data-id');
+        const entry = work.find(w => w.id === id);
+        if (entry) openWorkModal(entry);
+      };
+    });
 
-      container.querySelectorAll('.convert-inv-btn').forEach(btn => {
-        btn.onclick = (e) => {
-          e.stopPropagation();
-          const id = btn.getAttribute('data-id');
-          const entry = work.find(w => w.id === id);
-          if (entry) {
-            window.location.href = `invoices.html?action=create&workId=${entry.id}&clientId=${entry.clientId}`;
-          }
-        };
-      });
-    }
+    container.querySelectorAll('.delete-work-btn').forEach(btn => {
+      btn.onclick = (e) => {
+        e.stopPropagation();
+        const id = btn.getAttribute('data-id');
+        const entry = work.find(w => w.id === id);
+        if (entry) {
+          ConfirmDialog.show(
+            'Delete Work Entry',
+            `Are you sure you want to delete this work entry?`,
+            'Delete Entry',
+            () => deleteWork(id)
+          );
+        }
+      };
+    });
+
+    container.querySelectorAll('.convert-inv-btn').forEach(btn => {
+      btn.onclick = (e) => {
+        e.stopPropagation();
+        const id = btn.getAttribute('data-id');
+        const entry = work.find(w => w.id === id);
+        if (entry) {
+          Router.navigate('invoices', { action: 'create', workId: entry.id, clientId: entry.clientId });
+        }
+      };
+    });
   }
 
   function populateClientFilterSelect(selectEl, selectedVal) {
@@ -140,12 +138,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function openWorkModal(workToEdit = null, preselectedClientId = null) {
     const isEdit = !!workToEdit;
+    const modalId = 'work-form-modal';
     const title = isEdit ? 'Edit Work Entry' : 'Log New Work Entry';
 
     const clients = AppState.getClients();
     if (clients.length === 0) {
       Toast.warning('Please add a client first before logging work.');
-      window.location.href = 'clients.html';
+      Router.navigate('clients');
       return;
     }
 
@@ -159,63 +158,59 @@ document.addEventListener('DOMContentLoaded', () => {
     const defaultDate = isEdit ? workToEdit.date : new Date().toISOString().split('T')[0];
 
     const contentHtml = `
-      <form id="work-modal-form" class="space-y-4">
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Client <span class="text-red-500">*</span></label>
-            <select id="modal-work-client" class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-semibold focus:outline-none focus:border-blue-600">${clientOptions}</select>
+      <form id="work-modal-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Client <span class="required">*</span></label>
+            <select id="modal-work-client" class="form-control">${clientOptions}</select>
           </div>
-          <div>
-            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Date <span class="text-red-500">*</span></label>
-            <input type="date" id="modal-work-date" class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-semibold focus:outline-none focus:border-blue-600" value="${defaultDate}" required />
-          </div>
-        </div>
-
-        <div>
-          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Project Name <span class="text-red-500">*</span></label>
-          <input type="text" id="modal-work-project" class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-semibold focus:outline-none focus:border-blue-600" value="${isEdit ? Utils.escapeHtml(workToEdit.project || workToEdit.projectName || '') : ''}" placeholder="e.g. Website Redesign Phase 2" required />
-        </div>
-
-        <div>
-          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Task Description</label>
-          <textarea id="modal-work-desc" rows="2" class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-semibold focus:outline-none focus:border-blue-600" placeholder="Details of work completed...">${isEdit ? Utils.escapeHtml(workToEdit.description || '') : ''}</textarea>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Hours Logged <span class="text-red-500">*</span></label>
-            <input type="number" step="0.25" min="0.25" id="modal-work-hours" class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-semibold focus:outline-none focus:border-blue-600" value="${isEdit ? (workToEdit.hours || 1.0) : '1.0'}" required />
-          </div>
-          <div>
-            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Hourly Rate (₹) <span class="text-red-500">*</span></label>
-            <input type="number" step="50" min="0" id="modal-work-rate" class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-semibold focus:outline-none focus:border-blue-600" value="${isEdit ? (workToEdit.rate || workToEdit.hourlyRate || 3500) : '3500'}" required />
+          <div class="form-group">
+            <label class="form-label">Date <span class="required">*</span></label>
+            <input type="date" id="modal-work-date" class="form-control" value="${defaultDate}" required />
           </div>
         </div>
 
-        <div class="p-4 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl flex justify-between items-center">
-          <div>
-            <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Total Calculated Amount</div>
-            <div id="modal-work-total-calc" class="text-xl font-extrabold font-mono text-slate-900 dark:text-white mt-0.5">₹0</div>
+        <div class="form-group">
+          <label class="form-label">Project Name <span class="required">*</span></label>
+          <input type="text" id="modal-work-project" class="form-control" value="${isEdit ? Utils.escapeHtml(workToEdit.project) : ''}" placeholder="e.g. Website Redesign Phase 2" required />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Task Description</label>
+          <textarea id="modal-work-desc" class="form-control" placeholder="Details of work completed...">${isEdit ? Utils.escapeHtml(workToEdit.description) : ''}</textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Hours Logged <span class="required">*</span></label>
+            <input type="number" step="0.25" min="0.25" id="modal-work-hours" class="form-control" value="${isEdit ? workToEdit.hours : '1.0'}" required />
           </div>
-          <label class="flex items-center gap-2 text-xs font-bold text-slate-700 dark:text-slate-300 cursor-pointer">
-            <input type="checkbox" id="modal-work-billable" ${!isEdit || workToEdit.billable !== false ? 'checked' : ''} class="rounded border-slate-300 text-blue-600 focus:ring-blue-500" />
+          <div class="form-group">
+            <label class="form-label">Hourly Rate (₹) <span class="required">*</span></label>
+            <input type="number" step="50" min="0" id="modal-work-rate" class="form-control" value="${isEdit ? workToEdit.rate : '3500'}" required />
+          </div>
+        </div>
+
+        <div class="card" style="padding:1rem; background:var(--bg-canvas); margin-bottom:1rem; display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <div style="font-size:0.75rem; font-weight:700; color:var(--text-tertiary); text-transform:uppercase;">Total Calculated Amount</div>
+            <div id="modal-work-total-calc" style="font-size:1.5rem; font-weight:800;" class="text-large-num">₹0</div>
+          </div>
+          <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer; font-weight:600; font-size:0.875rem;">
+            <input type="checkbox" id="modal-work-billable" ${!isEdit || workToEdit.billable ? 'checked' : ''} />
             Billable Hours
           </label>
         </div>
       </form>
     `;
 
-    const footerHtml = `
-      <button type="button" onclick="Modal.close()" class="px-5 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300 text-xs font-bold rounded-full">Cancel</button>
-      <button type="button" id="save-work-submit-btn" class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-extrabold rounded-full shadow-lg shadow-blue-500/20">${isEdit ? 'Save Changes' : 'Log Work'}</button>
+    const actionsHtml = `
+      <button class="btn btn-secondary" onclick="Modal.close('${modalId}')">Cancel</button>
+      <button class="btn btn-primary" id="save-work-submit-btn">${isEdit ? 'Save Changes' : 'Log Work'}</button>
     `;
 
-    Modal.create({
-      title,
-      content: contentHtml,
-      widthClass: 'max-w-lg',
-      footerHtml
-    });
+    Modal.createModal(modalId, title, contentHtml, actionsHtml);
+    Modal.open(modalId);
 
     // Auto calculate amount on input change
     const hoursInput = document.getElementById('modal-work-hours');
@@ -225,11 +220,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateCalc() {
       const h = Number(hoursInput.value) || 0;
       const r = Number(rateInput.value) || 0;
-      if (calcEl) calcEl.textContent = Utils.formatCurrency(h * r);
+      calcEl.textContent = Utils.formatCurrency(h * r);
     }
 
-    if (hoursInput) hoursInput.oninput = updateCalc;
-    if (rateInput) rateInput.oninput = updateCalc;
+    hoursInput.oninput = updateCalc;
+    rateInput.oninput = updateCalc;
     updateCalc();
 
     // Save click listener
@@ -243,54 +238,53 @@ document.addEventListener('DOMContentLoaded', () => {
       const rate = Number(rateInput.value) || 0;
       const billable = document.getElementById('modal-work-billable').checked;
 
-      if (!project || hours <= 0) {
+      if (!Validators.isRequired(project) || hours <= 0) {
         Toast.error('Please fill in valid project name and logged hours.');
         return;
       }
 
       const amount = hours * rate;
+      let workList = AppState.getWork();
 
       if (isEdit) {
-        AppState.updateWork(workToEdit.id, {
-          clientId,
-          clientName: clientObj ? clientObj.name : 'Client',
-          date,
-          project,
-          projectName: project,
-          description,
-          hours,
-          rate,
-          hourlyRate: rate,
-          amount,
-          billable
-        });
-        Toast.success('Work entry updated successfully.');
+        const idx = workList.findIndex(w => w.id === workToEdit.id);
+        if (idx !== -1) {
+          workList[idx] = {
+            ...workList[idx],
+            clientId, clientName: clientObj ? clientObj.name : 'Client',
+            date, project, description, hours, rate, amount, billable
+          };
+          StorageManager.setItem(STORAGE_KEYS.WORK, workList);
+          StorageManager.logActivity('work_updated', 'Work Log Updated', `Updated work log for ${project}`);
+          Toast.success('Work entry updated successfully.');
+        }
       } else {
-        AppState.addWork({
-          clientId,
-          clientName: clientObj ? clientObj.name : 'Client',
-          date,
-          project,
-          projectName: project,
-          description,
-          hours,
-          rate,
-          hourlyRate: rate,
-          amount,
-          billable,
-          status: 'unbilled'
-        });
+        const newWork = {
+          id: Utils.generateId('wrk'),
+          clientId, clientName: clientObj ? clientObj.name : 'Client',
+          date, project, description, hours, rate, amount, billable,
+          status: 'unbilled',
+          createdAt: new Date().toISOString()
+        };
+        workList.unshift(newWork);
+        StorageManager.setItem(STORAGE_KEYS.WORK, workList);
+        StorageManager.logActivity('work_added', 'Work Logged', `Logged ${hours} hrs for ${clientObj ? clientObj.name : 'Client'}`);
         Toast.success('Work entry logged successfully.');
       }
 
-      Modal.close();
+      Modal.close(modalId);
+      AppState.notify('work_updated');
       renderWorkEntries();
     };
   }
 
   function deleteWork(id) {
-    AppState.deleteWork(id);
+    let work = AppState.getWork();
+    work = work.filter(w => w.id !== id);
+    StorageManager.setItem(STORAGE_KEYS.WORK, work);
+    StorageManager.logActivity('work_deleted', 'Work Entry Deleted', `Deleted work entry ${id}`);
     Toast.success('Work entry deleted.');
+    AppState.notify('work_updated');
     renderWorkEntries();
   }
 });

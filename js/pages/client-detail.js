@@ -2,7 +2,7 @@
    CLIENT DETAIL VIEW SCRIPT
    ============================================================ */
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('ledger-ready', () => {
   const params = Utils.getQueryParams();
   const clientId = params.id;
 

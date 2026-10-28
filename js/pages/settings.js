@@ -2,7 +2,7 @@
    SETTINGS, PROFILE & BACKUP/RESTORE SCRIPT
    ============================================================ */
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('ledger-ready', () => {
   renderSettings();
 
   // Save Profile & Business Settings
@@ -31,8 +31,9 @@ document.addEventListener('DOMContentLoaded', () => {
         'Clear Entire Workspace Data?',
         'WARNING: This will permanently delete all your clients, work entries, invoices, and payments. This action CANNOT be undone.',
         'Clear Workspace',
-        () => {
-          StorageManager.clearWorkspace();
+        async () => {
+          try { await StorageManager.clearWorkspace(); }
+          catch (err) { Toast.error(err.message); return; }
           StorageManager.logActivity('workspace_cleared', 'Workspace Cleared', 'User cleared all workspace data.');
           Toast.success('Workspace data cleared.');
           setTimeout(() => window.location.reload(), 500);
@@ -46,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const settings = AppState.getSettings() || {};
 
     setVal('setting-name', settings.name || user.name || '');
-    setVal('setting-email', settings.email || user.email || '');
+    setVal('setting-email', user.email || '');
     setVal('setting-phone', settings.phone || '');
     setVal('setting-country', settings.country || 'India');
 
@@ -65,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const settings = AppState.getSettings() || {};
 
     settings.name = getVal('setting-name');
-    settings.email = getVal('setting-email');
+    settings.email = Auth.getCurrentUser().email;
     settings.phone = getVal('setting-phone');
     settings.country = getVal('setting-country');
 
@@ -85,7 +86,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const currentUser = Auth.getCurrentUser();
     if (currentUser) {
       currentUser.name = settings.name;
-      currentUser.email = settings.email;
       StorageManager.setItem(STORAGE_KEYS.SESSION, currentUser);
     }
 
@@ -118,8 +118,8 @@ document.addEventListener('DOMContentLoaded', () => {
         'Confirm Data Import',
         'Importing this backup file will restore client directory, work logs, invoices, and settings. Continue?',
         'Import & Restore',
-        () => {
-          const success = StorageManager.importBackup(content);
+        async () => {
+          const success = await StorageManager.importBackup(content);
           if (success) {
             Toast.success('Data imported successfully! Reloading...');
             setTimeout(() => window.location.reload(), 600);

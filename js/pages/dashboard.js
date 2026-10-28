@@ -2,7 +2,7 @@
    DYNAMIC DASHBOARD CONTROLLER
    ============================================================ */
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('ledger-ready', () => {
   renderDashboard();
 });
 

@@ -2,7 +2,7 @@
    TAX SETTINGS & CONFIGURATION MANAGER
    ============================================================ */
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('ledger-ready', () => {
   renderTaxSettings();
 
   const saveBtn = document.getElementById('save-tax-settings-btn');

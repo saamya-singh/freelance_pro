@@ -4,7 +4,7 @@
 
 let currentInvoiceFilter = 'all';
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('ledger-ready', () => {
   renderInvoicesPage();
   setupInvoiceEventListeners();
 
