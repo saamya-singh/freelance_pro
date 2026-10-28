@@ -2,7 +2,7 @@
    GLOBAL APPLICATION BOOTSTRAP & MAIN INITIALIZER
    ============================================================ */
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('ledger-ready', () => {
   console.log("FreelanceLedger India initializing...");
 
   // Initialize Global UI Components if on authenticated pages

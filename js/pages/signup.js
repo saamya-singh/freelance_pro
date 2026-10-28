@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Form Submit Handler
   if (form) {
-    form.onsubmit = (e) => {
+    form.onsubmit = async (e) => {
       e.preventDefault();
 
       const name = nameInput.value.trim();
@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      const res = Auth.signup(name, email, password);
+      const res = await Auth.signup(name, email, password);
       if (res.success) {
         Toast.success('Account created successfully! Welcome to FreelanceLedger.');
         window.location.href = 'dashboard.html';

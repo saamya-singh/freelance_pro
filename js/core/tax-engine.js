@@ -1,74 +1,26 @@
-/* ============================================================
-   INDIAN TAX COMPUTATION ENGINE (FY 2025-26)
-   ============================================================ */
-
+/* Estimate income tax from the active workspace's tax configuration. */
 const TaxEngine = {
-  calculateTax(options = {}) {
-    const {
-      annualRevenue = 0,
-      allowableExpenses = 0,
-      otherIncome = 0,
-      tdsDeducted = 0,
-      regime = 'new'
-    } = options;
-
-    const grossIncome = Number(annualRevenue) + Number(otherIncome);
+  calculateTax({ annualRevenue = 0, allowableExpenses = 0, otherIncome = 0, deductions80C = 0, tdsDeducted = 0, regime = 'new' } = {}) {
+    const config = StorageManager.getItem(STORAGE_KEYS.TAX_SETTINGS, DEFAULT_TAX_CONFIG);
     const businessProfit = Math.max(0, Number(annualRevenue) - Number(allowableExpenses));
-    
-    // Standard deduction under New Tax Regime FY 2025-26
-    const stdDeduction = 75000;
-    const taxableIncome = Math.max(0, businessProfit + Number(otherIncome) - stdDeduction);
-
-    let baseTax = 0;
-    const breakdown = [];
-
-    // New Tax Regime Slabs (FY 2025-26 / Sec 115BAC)
-    const slabs = [
-      { min: 0, max: 400000, rate: 0, label: "Up to ₹4,00,000 (0%)" },
-      { min: 400000, max: 800000, rate: 0.05, label: "₹4,00,001 to ₹8,00,000 (5%)" },
-      { min: 800000, max: 1200000, rate: 0.10, label: "₹8,00,001 to ₹12,00,000 (10%)" },
-      { min: 1200000, max: 1600000, rate: 0.15, label: "₹12,00,001 to ₹16,00,000 (15%)" },
-      { min: 1600000, max: 2000000, rate: 0.20, label: "₹16,00,001 to ₹20,00,000 (20%)" },
-      { min: 2000000, max: 2400000, rate: 0.25, label: "₹20,00,001 to ₹24,00,000 (25%)" },
-      { min: 2400000, max: Infinity, rate: 0.30, label: "Above ₹24,00,000 (30%)" }
-    ];
-
-    slabs.forEach(slab => {
-      if (taxableIncome > slab.min) {
-        const taxableAmountInSlab = Math.min(taxableIncome - slab.min, slab.max - slab.min);
-        const taxInSlab = Math.round(taxableAmountInSlab * slab.rate);
-        baseTax += taxInSlab;
-
-        breakdown.push({
-          slab: slab.label,
-          tax: taxInSlab,
-          taxableAmount: taxableAmountInSlab
-        });
-      }
-    });
-
-    // Tax Rebate under Sec 87A (Nil tax if taxable income <= ₹12,00,000 under FY 25-26 New Regime)
-    if (taxableIncome <= 1200000) {
-      baseTax = 0;
-    }
-
-    const cessAmount = Math.round(baseTax * 0.04);
-    const totalTaxLiability = Math.max(0, baseTax + cessAmount - Number(tdsDeducted));
-    const effectiveRate = grossIncome > 0 ? (totalTaxLiability / grossIncome) * 100 : 0;
-    const monthlyProvision = Math.round(totalTaxLiability / 12);
-    const netTakeHome = Math.max(0, grossIncome - Number(allowableExpenses) - totalTaxLiability);
-
+    const grossIncome = businessProfit + Math.max(0, Number(otherIncome));
+    const old = regime === 'old';
+    const deduction = old ? Number(deductions80C) + Number(config.standardDeductionOld || 0) : Number(config.standardDeductionNew || 0);
+    const taxableIncome = Math.max(0, grossIncome - deduction);
+    const slabs = old ? config.oldRegimeSlabs : config.newRegimeSlabs;
+    const breakdown = slabs.map(slab => ({
+      slab: slab.label || `Above ₹${slab.min}`,
+      tax: Math.max(0, Math.min(taxableIncome, slab.max == null ? Infinity : slab.max) - Number(slab.min)) * Number(slab.rate)
+    }));
+    const baseTax = breakdown.reduce((total, row) => total + row.tax, 0);
+    const surchargeRate = (config.surchargeSlabs || []).find(slab => taxableIncome >= slab.min && (slab.max == null || taxableIncome < slab.max))?.rate || 0;
+    const cessAmount = baseTax * (1 + surchargeRate) * Number(config.cessRate || 0);
+    const totalTaxLiability = baseTax * (1 + surchargeRate) + cessAmount;
+    const outstandingTax = Math.max(0, totalTaxLiability - Number(tdsDeducted));
     return {
-      grossIncome,
-      businessProfit,
-      taxableIncome,
-      baseTax,
-      cessAmount,
-      totalTaxLiability,
-      effectiveRate,
-      monthlyProvision,
-      netTakeHome,
-      breakdown
+      grossIncome, businessProfit, taxableIncome, breakdown, baseTax, cessAmount,
+      totalTaxLiability, effectiveRate: grossIncome ? totalTaxLiability / grossIncome * 100 : 0,
+      monthlyProvision: outstandingTax / 12, netTakeHome: businessProfit - totalTaxLiability
     };
   }
 };

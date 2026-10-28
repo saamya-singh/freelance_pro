@@ -21,11 +21,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Demo Login Button
   if (demoLoginBtn) {
-    demoLoginBtn.onclick = () => {
+    demoLoginBtn.onclick = async () => {
       demoLoginBtn.disabled = true;
       demoLoginBtn.textContent = 'Authenticating Demo User...';
-      setTimeout(() => {
-        const res = Auth.demoLogin();
+      {
+        const res = await Auth.demoLogin();
         if (res.success) {
           Toast.success('Authenticated as Demo User! Redirecting...');
           window.location.href = 'dashboard.html';
@@ -34,13 +34,13 @@ document.addEventListener('DOMContentLoaded', () => {
           demoLoginBtn.disabled = false;
           demoLoginBtn.textContent = 'Continue with Demo Account';
         }
-      }, 400);
+      }
     };
   }
 
   // Standard Login Form Submit
   if (form) {
-    form.onsubmit = (e) => {
+    form.onsubmit = async (e) => {
       e.preventDefault();
       errorAlert.classList.add('hidden');
 
@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       passwordInput.classList.remove('is-invalid');
 
-      const result = Auth.login(email, password);
+      const result = await Auth.login(email, password);
       if (result.success) {
         Toast.success('Login successful! Redirecting to Dashboard...');
         window.location.href = 'dashboard.html';

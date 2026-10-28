@@ -1,8 +1,10 @@
 /* ============================================================
-   INDIAN TAX CALCULATOR CONTROLLER (FY 2025-26 NEW REGIME)
+   INDIAN TAX CALCULATOR CONTROLLER WITH REGIME TOGGLE FIX
    ============================================================ */
 
-document.addEventListener('DOMContentLoaded', () => {
+let activeRegime = 'new';
+
+document.addEventListener('ledger-ready', () => {
   initTaxCalculator();
 });
 
@@ -11,6 +13,7 @@ function initTaxCalculator() {
     'tax-annual-revenue',
     'tax-expenses',
     'tax-other-income',
+    'tax-deductions',
     'tax-tds'
   ];
 
@@ -19,6 +22,24 @@ function initTaxCalculator() {
     if (input) {
       input.addEventListener('input', () => calculateAndRenderTax());
     }
+  });
+
+  // Fix Regime Switch Buttons Click Handlers!
+  const regimeBtns = document.querySelectorAll('.regime-btn');
+  regimeBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      regimeBtns.forEach(b => {
+        b.classList.remove('active', 'bg-white', 'dark:bg-slate-900', 'text-blue-600', 'dark:text-blue-400', 'font-extrabold', 'shadow-sm');
+        b.classList.add('text-slate-500', 'font-bold');
+      });
+
+      btn.classList.add('active', 'bg-white', 'dark:bg-slate-900', 'text-blue-600', 'dark:text-blue-400', 'font-extrabold', 'shadow-sm');
+      btn.classList.remove('text-slate-500', 'font-bold');
+
+      activeRegime = btn.dataset.regime || 'new';
+      calculateAndRenderTax();
+    });
   });
 
   // Pre-fill revenue from paid invoices if available
@@ -38,13 +59,16 @@ function calculateAndRenderTax() {
   const rev = Number(document.getElementById('tax-annual-revenue')?.value) || 0;
   const exp = Number(document.getElementById('tax-expenses')?.value) || 0;
   const oth = Number(document.getElementById('tax-other-income')?.value) || 0;
+  const ded = Number(document.getElementById('tax-deductions')?.value) || 0;
   const tds = Number(document.getElementById('tax-tds')?.value) || 0;
 
   const result = TaxEngine.calculateTax({
     annualRevenue: rev,
     allowableExpenses: exp,
     otherIncome: oth,
-    tdsDeducted: tds
+    deductions80C: ded,
+    tdsDeducted: tds,
+    regime: activeRegime
   });
 
   // Update UI Elements
@@ -81,9 +105,9 @@ function calculateAndRenderTax() {
     let html = '';
     result.breakdown.forEach(b => {
       html += `
-        <div class="flex justify-between text-slate-600 dark:text-slate-400 py-1 border-b border-slate-100 dark:border-slate-800/60">
+        <div class="flex justify-between text-slate-600 dark:text-slate-400 py-0.5">
           <span>${Utils.escapeHtml(b.slab)}</span>
-          <span class="font-mono font-bold text-slate-900 dark:text-slate-100">${Utils.formatCurrency(b.tax)}</span>
+          <span class="font-mono font-bold">${Utils.formatCurrency(b.tax)}</span>
         </div>
       `;
     });

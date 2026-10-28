@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Invoices — FreelancePro</title>
+  <title>Invoices — FreelanceLedger India</title>
   
   <link rel="stylesheet" href="../css/global.css" />
   <script src="https://cdn.tailwindcss.com"></script>
@@ -34,7 +34,7 @@
     <main class="flex-1 md:ml-[250px] flex flex-col min-w-0 pb-20 md:pb-8">
       <header id="app-header"></header>
 
-      <div class="p-6 md:p-8 max-w-7xl w-full mx-auto space-y-8 animate-fade-in-up">
+      <div class="p-6 md:p-8 max-w-7xl w-full mx-auto space-y-8">
         <!-- Page Title & Header Action -->
         <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-4 border-b border-slate-200 dark:border-slate-800">
           <div>
@@ -42,14 +42,14 @@
             <p class="text-sm text-slate-500 dark:text-slate-400 mt-1 max-w-xl">Manage your cash flow, track pending payments, and send beautifully crafted invoices to your clients.</p>
           </div>
           <div>
-            <button class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-sm rounded-full border-2 border-slate-900 shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] hover:-translate-y-0.5 transition-all" id="create-invoice-btn">+ CREATE INVOICE</button>
+            <button class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-sm rounded-full border-2 border-slate-900 shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] transition-all" id="create-invoice-btn">+ CREATE INVOICE</button>
           </div>
         </div>
 
         <!-- Metric Cards Stack -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
           <!-- Awaiting Funds Card -->
-          <div class="bg-white dark:bg-slate-900 border-2 border-slate-900 dark:border-slate-800 rounded-3xl p-6 shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] card-hover-effect flex flex-col justify-between transition-colors">
+          <div class="bg-white dark:bg-slate-900 border-2 border-slate-900 dark:border-slate-800 rounded-3xl p-6 shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] flex flex-col justify-between transition-colors">
             <div class="flex justify-between items-start mb-4">
               <div>
                 <div class="text-xs font-extrabold text-slate-900 dark:text-slate-100 uppercase tracking-wider">Awaiting Funds</div>
@@ -61,7 +61,7 @@
           </div>
 
           <!-- Overdue Card -->
-          <div class="bg-white dark:bg-slate-900 border-2 border-slate-900 dark:border-slate-800 rounded-3xl p-6 shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] card-hover-effect flex flex-col justify-between transition-colors">
+          <div class="bg-white dark:bg-slate-900 border-2 border-slate-900 dark:border-slate-800 rounded-3xl p-6 shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] flex flex-col justify-between transition-colors">
             <div class="flex justify-between items-start mb-4">
               <div>
                 <div class="text-xs font-extrabold text-slate-900 dark:text-slate-100 uppercase tracking-wider">Overdue</div>
@@ -73,7 +73,7 @@
           </div>
 
           <!-- Paid (30 Days) Card -->
-          <div class="bg-white dark:bg-slate-900 border-2 border-slate-900 dark:border-slate-800 rounded-3xl p-6 shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] card-hover-effect flex flex-col justify-between transition-colors">
+          <div class="bg-white dark:bg-slate-900 border-2 border-slate-900 dark:border-slate-800 rounded-3xl p-6 shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] flex flex-col justify-between transition-colors">
             <div class="flex justify-between items-start mb-4">
               <div>
                 <div class="text-xs font-extrabold text-slate-900 dark:text-slate-100 uppercase tracking-wider">Paid (30 Days)</div>
@@ -107,7 +107,7 @@
   </div>
 
   <!-- Floating Action Button (FAB +) -->
-  <button id="create-invoice-fab-btn" onclick="document.getElementById('create-invoice-btn').click()" class="fixed bottom-20 md:bottom-8 right-6 w-14 h-14 bg-blue-600 text-white rounded-full border-2 border-slate-900 flex items-center justify-center text-2xl font-bold shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] hover:bg-blue-700 transform hover:scale-110 transition-all z-40 animate-pulse-glow" title="Create Invoice">
+  <button id="create-invoice-fab-btn" onclick="document.getElementById('create-invoice-btn').click()" class="fixed bottom-20 md:bottom-8 right-6 w-14 h-14 bg-blue-600 text-white rounded-full border-2 border-slate-900 flex items-center justify-center text-2xl font-bold shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] hover:bg-blue-700 transform hover:scale-105 transition-all z-40" title="Create Invoice">
     +
   </button>
 

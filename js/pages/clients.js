@@ -4,7 +4,7 @@
 
 let currentFilter = 'all';
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('ledger-ready', () => {
   renderClientsPage();
   setupEventListeners();
 });

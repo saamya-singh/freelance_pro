@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Indian Tax Calculator — FreelancePro</title>
+  <title>Indian Tax Calculator — FreelanceLedger India</title>
   
   <link rel="stylesheet" href="../css/global.css" />
   <script src="https://cdn.tailwindcss.com"></script>
@@ -37,16 +37,22 @@
         <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-4 border-b border-slate-200 dark:border-slate-800">
           <div>
             <h1 class="text-3xl font-extrabold tracking-tight">Indian Tax Engine & Estimator</h1>
-            <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Real-time calculation of estimated Income Tax under FY 2025-26 New Tax Regime (Sec 115BAC), 4% Cess, and monthly provisions.</p>
+            <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Real-time calculation of estimated Income Tax (FY 2025-26), 4% Cess, and monthly provisions.</p>
+          </div>
+          <div>
+            <a href="tax-settings.html" class="px-5 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 font-extrabold text-xs rounded-full shadow-sm">⚙️ Configure Tax Slabs</a>
           </div>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <!-- Inputs Card -->
-          <div class="bg-white dark:bg-slate-900 border-2 border-slate-900 dark:border-slate-800 rounded-3xl p-6 shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] space-y-5">
-            <div class="flex items-center justify-between">
-              <h3 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider">Income & Expenses Inputs</h3>
-              <span class="px-3 py-1 bg-lime-400 text-slate-950 text-[10px] font-extrabold rounded-full border border-slate-900">FY 2025-26 New Regime</span>
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm space-y-5">
+            <h3 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider">Income & Deduction Inputs</h3>
+
+            <!-- Regime Selector -->
+            <div class="flex p-1 bg-slate-100 dark:bg-slate-950 rounded-full border border-slate-200 dark:border-slate-800">
+              <button class="regime-btn active flex-1 py-2 text-xs font-extrabold rounded-full bg-white dark:bg-slate-900 text-blue-600 dark:text-blue-400 shadow-sm" data-regime="new">New Tax Regime (Sec 115BAC)</button>
+              <button class="regime-btn flex-1 py-2 text-xs font-bold text-slate-500 rounded-full" data-regime="old">Old Tax Regime (With Deductions)</button>
             </div>
 
             <form id="tax-calculator-form" onsubmit="return false;" class="space-y-4">
@@ -68,6 +74,11 @@
               </div>
 
               <div>
+                <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Chapter VI-A Deductions (80C, 80D) (₹)</label>
+                <input type="number" step="1000" id="tax-deductions" class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-sm font-semibold focus:outline-none focus:border-blue-600" value="150000" />
+              </div>
+
+              <div>
                 <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">TDS Already Deducted (194J / 194C) (₹)</label>
                 <input type="number" step="500" id="tax-tds" class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-sm font-semibold focus:outline-none focus:border-blue-600" value="35000" />
               </div>
@@ -75,10 +86,10 @@
           </div>
 
           <!-- Tax Summary Output Card -->
-          <div class="bg-white dark:bg-slate-900 border-2 border-slate-900 dark:border-slate-800 rounded-3xl p-6 shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] space-y-4">
+          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm space-y-4">
             <div class="flex justify-between items-center pb-3 border-b border-slate-100 dark:border-slate-800">
               <h3 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider">Tax Computation Summary</h3>
-              <span class="px-3 py-1 bg-blue-100 dark:bg-blue-950 text-blue-600 dark:text-blue-400 text-[10px] font-extrabold rounded-full">Sec 115BAC</span>
+              <span class="px-3 py-1 bg-blue-100 dark:bg-blue-950 text-blue-600 dark:text-blue-400 text-[10px] font-extrabold rounded-full">FY 2025-26</span>
             </div>
 
             <div class="space-y-2 text-xs">
@@ -91,12 +102,12 @@
                 <span id="tax-business-profit" class="font-semibold">₹0</span>
               </div>
               <div class="flex justify-between py-1 border-b border-slate-100 dark:border-slate-800">
-                <span class="text-slate-500">Taxable Income (After ₹75k Std Deduction)</span>
+                <span class="text-slate-500">Taxable Income</span>
                 <span id="taxable-income" class="font-extrabold text-slate-900 dark:text-white">₹0</span>
               </div>
             </div>
 
-            <div class="text-[10px] font-extrabold uppercase text-slate-400 tracking-wider pt-2">FY 25-26 New Regime Slab Breakdown</div>
+            <div class="text-[10px] font-extrabold uppercase text-slate-400 tracking-wider pt-2">Slab Tax Breakdown</div>
             <div id="tax-slabs-breakdown-list" class="space-y-1.5 text-xs"></div>
 
             <div class="space-y-2 text-xs pt-3 border-t border-slate-100 dark:border-slate-800">
@@ -108,7 +119,7 @@
                 <span class="text-slate-500">Health & Education Cess (4%)</span>
                 <span id="tax-cess-amount" class="font-semibold">₹0</span>
               </div>
-              <div class="flex justify-between p-3 bg-slate-50 dark:bg-slate-950 rounded-xl text-sm font-extrabold text-slate-900 dark:text-white border-2 border-slate-900">
+              <div class="flex justify-between p-3 bg-slate-50 dark:bg-slate-950 rounded-xl text-sm font-extrabold text-slate-900 dark:text-white border border-slate-200 dark:border-slate-800">
                 <span>Total Tax Liability</span>
                 <span id="tax-total-liability">₹0</span>
               </div>
@@ -120,7 +131,7 @@
                 <span class="text-slate-500">Monthly Provision</span>
                 <span id="tax-monthly-provision" class="font-extrabold text-blue-600">₹0</span>
               </div>
-              <div class="flex justify-between p-3 bg-lime-400 text-slate-950 rounded-xl text-sm font-extrabold border-2 border-slate-900 shadow-[2px_2px_0px_0px_rgba(15,23,42,1)]">
+              <div class="flex justify-between p-3 bg-lime-400/20 rounded-xl text-sm font-extrabold text-lime-800 dark:text-lime-400 border border-lime-500/30">
                 <span>Estimated Net Take-Home</span>
                 <span id="tax-net-takehome" class="font-mono text-base">₹0</span>
               </div>
@@ -128,7 +139,7 @@
 
             <div class="p-3 bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900 rounded-xl text-amber-800 dark:text-amber-300 text-[11px] flex items-center gap-2">
               <span>⚠️</span>
-              <span>This calculation uses FY 2025-26 New Tax Regime slabs (Sec 115BAC) with ₹12 Lakh Sec 87A rebate.</span>
+              <span>This calculation is an estimate for financial planning purposes and does not constitute formal tax advice.</span>
             </div>
           </div>
         </div>
@@ -140,13 +151,13 @@
   <!-- Core Scripts -->
   <script src="../js/data/demo-data.js"></script>
   <script src="../js/data/tax-slabs.js"></script>
-  <script src="../js/core/tax-engine.js"></script>
   <script src="../js/core/storage.js"></script>
   <script src="../js/core/utils.js"></script>
   <script src="../js/core/validators.js"></script>
   <script src="../js/core/notifications.js"></script>
   <script src="../js/core/auth.js"></script>
   <script src="../js/core/state.js"></script>
+  <script src="../js/core/tax-engine.js"></script>
   <script src="../js/core/router.js"></script>
   <script src="../js/components/sidebar.js"></script>
   <script src="../js/components/header.js"></script>
