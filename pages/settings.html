@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Settings — FreelancePro</title>
+  <title>Settings — FreelanceLedger India</title>
   
   <link rel="stylesheet" href="../css/global.css" />
   <script src="https://cdn.tailwindcss.com"></script>
@@ -33,21 +33,21 @@
     <main class="flex-1 md:ml-[250px] flex flex-col min-w-0 pb-12">
       <header id="app-header"></header>
 
-      <div class="p-6 md:p-8 max-w-7xl w-full mx-auto space-y-8 animate-fade-in-up">
+      <div class="p-6 md:p-8 max-w-7xl w-full mx-auto space-y-8">
         <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-4 border-b border-slate-200 dark:border-slate-800">
           <div>
             <h1 class="text-3xl font-extrabold tracking-tight">Account & Business Settings</h1>
             <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Manage your professional profile, GST details, preferences, and data backup/import.</p>
           </div>
           <div>
-            <button class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs rounded-full border-2 border-slate-900 shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] hover:-translate-y-0.5 transition-all" id="save-settings-btn">Save Changes</button>
+            <button class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs rounded-full shadow-lg shadow-blue-500/25 transition-all" id="save-settings-btn">Save Changes</button>
           </div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
           <!-- Left Column: Profile & Business -->
           <div class="space-y-8">
-            <div class="bg-white dark:bg-slate-900 border-2 border-slate-900 dark:border-slate-800 rounded-3xl p-6 shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] card-hover-effect space-y-4">
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm space-y-4">
               <h3 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider">Personal Profile</h3>
 
               <div>
@@ -56,7 +56,7 @@
               </div>
               <div>
                 <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Email Address</label>
-                <input type="email" id="setting-email" class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-sm font-semibold focus:outline-none focus:border-blue-600" />
+                <input type="email" id="setting-email" readonly title="Your account email cannot be changed here" class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-sm font-semibold" />
               </div>
               <div class="grid grid-cols-2 gap-4">
                 <div>
@@ -70,7 +70,7 @@
               </div>
             </div>
 
-            <div class="bg-white dark:bg-slate-900 border-2 border-slate-900 dark:border-slate-800 rounded-3xl p-6 shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] card-hover-effect space-y-4">
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm space-y-4">
               <h3 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider">Business Details</h3>
 
               <div>
@@ -96,14 +96,14 @@
 
           <!-- Right Column: Preferences & Data Backup/Restore -->
           <div class="space-y-8">
-            <div class="bg-white dark:bg-slate-900 border-2 border-slate-900 dark:border-slate-800 rounded-3xl p-6 shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] card-hover-effect space-y-4">
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm space-y-4">
               <h3 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider">Preferences & Theme</h3>
 
               <div>
                 <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-2">Appearance Mode</label>
                 <div class="flex gap-3">
-                  <button type="button" class="px-5 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 rounded-full text-xs font-bold transition-all" onclick="ThemeManager.setTheme('light', true)">☀️ Light Mode</button>
-                  <button type="button" class="px-5 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 rounded-full text-xs font-bold transition-all" onclick="ThemeManager.setTheme('dark', true)">🌙 Dark Mode</button>
+                  <button type="button" class="px-5 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 rounded-full text-xs font-bold" onclick="ThemeManager.setTheme('light', true)">☀️ Light Mode</button>
+                  <button type="button" class="px-5 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 rounded-full text-xs font-bold" onclick="ThemeManager.setTheme('dark', true)">🌙 Dark Mode</button>
                 </div>
               </div>
 
@@ -122,13 +122,13 @@
               </div>
             </div>
 
-            <div class="bg-white dark:bg-slate-900 border-2 border-slate-900 dark:border-slate-800 rounded-3xl p-6 shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] card-hover-effect space-y-4">
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm space-y-4">
               <h3 class="text-xs font-extrabold text-slate-400 uppercase tracking-wider">Data Backup & Restore</h3>
 
               <div class="p-6 border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-2xl text-center bg-slate-50 dark:bg-slate-950 space-y-4">
                 <div class="text-sm font-bold">Export Full Backup</div>
                 <p class="text-xs text-slate-500">Download a JSON file containing all clients, work logs, invoices, and settings.</p>
-                <button class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs rounded-full border-2 border-slate-900 shadow-[2px_2px_0px_0px_rgba(15,23,42,1)] hover:-translate-y-0.5 transition-all" id="export-data-btn">📥 Download Backup JSON</button>
+                <button class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs rounded-full shadow-md shadow-blue-500/20" id="export-data-btn">📥 Download Backup JSON</button>
 
                 <div class="pt-4 border-t border-slate-200 dark:border-slate-800">
                   <div class="text-sm font-bold mb-1">Restore from Backup JSON</div>
@@ -137,7 +137,7 @@
               </div>
 
               <div class="pt-4 border-t border-slate-100 dark:border-slate-800 text-right">
-                <button class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-xs font-bold rounded-full transition-all" id="clear-workspace-btn">Clear Workspace Data</button>
+                <button class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-xs font-bold rounded-full" id="clear-workspace-btn">Clear Workspace Data</button>
               </div>
             </div>
           </div>
