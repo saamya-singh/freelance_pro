@@ -1,0 +1,235 @@
+{
+  "info": {
+    "name": "FreelanceLedger API",
+    "description": "End-to-end API requests for the MongoDB-backed FreelanceLedger server. Run the collection in order against a local server. Signup generates a unique test account and Postman automatically retains the session cookie.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3000/api" },
+    { "key": "testEmail", "value": "" },
+    { "key": "testPassword", "value": "ApiTest123!" }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "request": { "method": "GET", "url": "{{baseUrl}}/health" },
+      "event": [{ "listen": "test", "script": { "exec": [
+        "pm.test('API is healthy', () => {",
+        "  pm.response.to.have.status(200);",
+        "  pm.expect(pm.response.json().status).to.eql('ok');",
+        "});"
+      ] } }]
+    },
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Sign Up Test Account",
+          "event": [
+            { "listen": "prerequest", "script": { "exec": [
+              "pm.collectionVariables.set('testEmail', `api-test-${Date.now()}@example.com`);"
+            ] } },
+            { "listen": "test", "script": { "exec": [
+              "pm.test('Account created', () => pm.response.to.have.status(200));",
+              "pm.test('Safe user returned', () => {",
+              "  const body = pm.response.json();",
+              "  pm.expect(body.user.email).to.eql(pm.collectionVariables.get('testEmail'));",
+              "  pm.expect(body.user).not.to.have.property('passwordHash');",
+              "});"
+            ] } }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"API Test User\",\n  \"email\": \"{{testEmail}}\",\n  \"password\": \"{{testPassword}}\"\n}" },
+            "url": "{{baseUrl}}/auth/signup"
+          }
+        },
+        {
+          "name": "Current User",
+          "request": { "method": "GET", "url": "{{baseUrl}}/auth/me" },
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Session is authenticated', () => {",
+            "  pm.response.to.have.status(200);",
+            "  pm.expect(pm.response.json().user.email).to.eql(pm.collectionVariables.get('testEmail'));",
+            "});"
+          ] } }]
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"{{testEmail}}\",\n  \"password\": \"{{testPassword}}\"\n}" },
+            "url": "{{baseUrl}}/auth/login"
+          },
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Login succeeds', () => pm.response.to.have.status(200));"
+          ] } }]
+        }
+      ]
+    },
+    {
+      "name": "Workspace",
+      "item": [
+        {
+          "name": "Get Workspace",
+          "request": { "method": "GET", "url": "{{baseUrl}}/workspace" },
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Workspace returned', () => {",
+            "  pm.response.to.have.status(200);",
+            "  pm.expect(pm.response.json().clients).to.be.an('array');",
+            "});"
+          ] } }]
+        },
+        {
+          "name": "Import Workspace",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"clients\": [{ \"id\": \"cli_api_1\", \"name\": \"API Client\", \"email\": \"billing@example.com\", \"status\": \"active\" }],\n  \"work\": [],\n  \"invoices\": [],\n  \"payments\": [],\n  \"activities\": [],\n  \"settings\": { \"name\": \"API Test User\", \"businessName\": \"API Test Studio\", \"currency\": \"INR\" }\n}" },
+            "url": "{{baseUrl}}/workspace"
+          },
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Workspace imported', () => {",
+            "  pm.response.to.have.status(200);",
+            "  pm.expect(pm.response.json().clients).to.have.length(1);",
+          "});"
+          ] } }]
+        },
+        {
+          "name": "Clear Workspace",
+          "request": { "method": "DELETE", "url": "{{baseUrl}}/workspace" },
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Workspace cleared', () => {",
+            "  pm.response.to.have.status(200);",
+            "  pm.expect(pm.response.json().clients).to.be.empty;",
+            "});"
+          ] } }]
+        }
+      ]
+    },
+    {
+      "name": "Resources",
+      "item": [
+        {
+          "name": "Replace Clients",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "[{\n  \"id\": \"cli_api_1\",\n  \"name\": \"API Client\",\n  \"company\": \"Example Ltd\",\n  \"email\": \"billing@example.com\",\n  \"status\": \"active\"\n}]" },
+            "url": "{{baseUrl}}/clients"
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Clients saved', () => pm.response.to.have.status(200));"] } }]
+        },
+        {
+          "name": "Get Clients",
+          "request": { "method": "GET", "url": "{{baseUrl}}/clients" },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Clients returned', () => { pm.response.to.have.status(200); pm.expect(pm.response.json()).to.have.length(1); });"] } }]
+        },
+        {
+          "name": "Replace Work",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "[{\n  \"id\": \"wrk_api_1\",\n  \"clientId\": \"cli_api_1\",\n  \"clientName\": \"API Client\",\n  \"project\": \"API Integration\",\n  \"date\": \"2026-10-27\",\n  \"hours\": 2,\n  \"rate\": 2500,\n  \"amount\": 5000,\n  \"status\": \"unbilled\"\n}]" },
+            "url": "{{baseUrl}}/work"
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Work saved', () => pm.response.to.have.status(200));"] } }]
+        },
+        {
+          "name": "Get Work",
+          "request": { "method": "GET", "url": "{{baseUrl}}/work" },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Work returned', () => pm.response.to.have.status(200));"] } }]
+        },
+        {
+          "name": "Replace Invoices",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "[{\n  \"id\": \"inv_api_1\",\n  \"number\": \"INV-API-001\",\n  \"clientId\": \"cli_api_1\",\n  \"items\": [{ \"description\": \"API Integration\", \"quantity\": 1, \"rate\": 5000, \"amount\": 5000 }],\n  \"subtotal\": 5000,\n  \"gstAmount\": 900,\n  \"total\": 5900,\n  \"status\": \"sent\"\n}]" },
+            "url": "{{baseUrl}}/invoices"
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Invoices saved', () => pm.response.to.have.status(200));"] } }]
+        },
+        {
+          "name": "Get Invoices",
+          "request": { "method": "GET", "url": "{{baseUrl}}/invoices" },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Invoices returned', () => pm.response.to.have.status(200));"] } }]
+        },
+        {
+          "name": "Replace Payments",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "[{\n  \"id\": \"pay_api_1\",\n  \"invoiceId\": \"inv_api_1\",\n  \"amount\": 5900,\n  \"paymentDate\": \"2026-10-27\",\n  \"paymentMethod\": \"Bank Transfer\"\n}]" },
+            "url": "{{baseUrl}}/payments"
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Payments saved', () => pm.response.to.have.status(200));"] } }]
+        },
+        {
+          "name": "Get Payments",
+          "request": { "method": "GET", "url": "{{baseUrl}}/payments" },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Payments returned', () => pm.response.to.have.status(200));"] } }]
+        },
+        {
+          "name": "Replace Activities",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "[{\n  \"id\": \"act_api_1\",\n  \"type\": \"api_test\",\n  \"title\": \"API Tested\",\n  \"description\": \"Postman collection test\",\n  \"timestamp\": \"2026-10-27T00:00:00.000Z\"\n}]" },
+            "url": "{{baseUrl}}/activities"
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Activities saved', () => pm.response.to.have.status(200));"] } }]
+        },
+        {
+          "name": "Get Activities",
+          "request": { "method": "GET", "url": "{{baseUrl}}/activities" },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Activities returned', () => pm.response.to.have.status(200));"] } }]
+        },
+        {
+          "name": "Replace Settings",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"API Test User\",\n  \"businessName\": \"API Test Studio\",\n  \"country\": \"India\",\n  \"currency\": \"INR\",\n  \"invoicePrefix\": \"API-\"\n}" },
+            "url": "{{baseUrl}}/settings"
+          },
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Settings saved with protected identity', () => {",
+            "  pm.response.to.have.status(200);",
+            "  pm.expect(pm.response.json().email).to.eql(pm.collectionVariables.get('testEmail'));",
+            "});"
+          ] } }]
+        },
+        {
+          "name": "Get Settings",
+          "request": { "method": "GET", "url": "{{baseUrl}}/settings" },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Settings returned', () => pm.response.to.have.status(200));"] } }]
+        },
+        {
+          "name": "Replace Tax Settings",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"financialYear\": \"2025-26\",\n  \"defaultRegime\": \"new\",\n  \"cessRate\": 0.04,\n  \"standardDeductionNew\": 75000,\n  \"standardDeductionOld\": 50000,\n  \"newRegimeSlabs\": [],\n  \"oldRegimeSlabs\": []\n}" },
+            "url": "{{baseUrl}}/taxSettings"
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Tax settings saved', () => pm.response.to.have.status(200));"] } }]
+        },
+        {
+          "name": "Get Tax Settings",
+          "request": { "method": "GET", "url": "{{baseUrl}}/taxSettings" },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Tax settings returned', () => pm.response.to.have.status(200));"] } }]
+        }
+      ]
+    },
+    {
+      "name": "Logout",
+      "request": { "method": "POST", "url": "{{baseUrl}}/auth/logout" },
+      "event": [{ "listen": "test", "script": { "exec": [
+        "pm.test('Session logged out', () => pm.response.to.have.status(200));"
+      ] } }]
+    }
+  ]
+}

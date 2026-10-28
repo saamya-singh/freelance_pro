@@ -1,87 +1,54 @@
 # FreelanceLedger India
 
-> *"Do the work. Own the numbers. Grow with clarity."*
+FreelanceLedger is a freelancer CRM, work tracker, invoicing and Indian tax dashboard. The vanilla JavaScript frontend is served by a Node.js + Express backend. Accounts, sessions and workspaces are stored in MongoDB, not in browser LocalStorage (which is used only for the theme).
 
-FreelanceLedger India is a premium financial operating system built specifically for freelancers, consultants, creators, independent professionals, and small agencies in India.
+## Run locally
 
----
+Requires Node.js 18+, npm and MongoDB. Add your connection string to `.env`; `.env.example` lists the supported settings.
 
-## 🌟 Key Features
-
-- **Swiss Editorial Design System**: Ultra-clean monochrome aesthetic, warm ivory canvas (`#F7F7F2`), crisp 1px structural borders, and high-contrast typography.
-- **Client Relationship Management (CRM)**: Manage clients, GSTINs, PAN numbers, billing addresses, and view aggregate lifetime revenue.
-- **Work Tracking & Billable Hours**: Log project hours and rates (`Amount = Hours × Rate`), track billable vs non-billable time, and convert work entries to invoices in 1-click.
-- **Invoice & Payment Engine**: Generate professional, GST-compliant invoices (Subtotal, Discount %, GST 18%, Total), record partial/full payments, and print/export PDF formatted documents.
-- **Indian Tax Calculation Engine**: Real-time tax estimation under New (Section 115BAC) vs Old Tax Regimes for FY 2025-26/2026-27, with 4% Health & Education Cess, standard deductions, and monthly tax provision estimates.
-- **Global Command Palette (`Cmd+K` / `Ctrl+K`)**: Instant search and direct navigation across clients, work logs, invoices, and app shortcuts.
-- **Data Backup & Restore**: Full JSON export (`freelanceledger-backup.json`) and schema-validated JSON import.
-- **Zero External Dependencies**: Built entirely with standard HTML5, CSS3, Vanilla JavaScript, and LocalStorage persistence.
-
----
-
-## 🚀 How to Run
-
-1. Clone or download this project folder.
-2. Open the project in VS Code or any local development environment.
-3. Launch a local web server (e.g. VS Code **Live Server** extension, Python `python3 -m http.server 8000`, or Node `npx serve`).
-4. Navigate to `http://127.0.0.1:8000/index.html` in your browser.
-
----
-
-## 📂 Project Structure
-
+```env
+MONGO_DB_URL=mongodb+srv://username:password@cluster.example.mongodb.net/
+MONGO_DB_NAME=freelanceledger
+PORT=3000
 ```
-FreelanceLedger/
-├── index.html                       # Public Editorial Landing Page
-├── pages/
-│   ├── login.html                   # Login & Demo account access
-│   ├── signup.html                  # Signup with live password strength meter
-│   ├── forgot-password.html         # Password reset simulation
-│   ├── dashboard.html                # Main financial KPI dashboard & SVG charts
-│   ├── clients.html                  # Clients CRM directory
-│   ├── client-detail.html            # Single client profile & activity hub
-│   ├── work.html                     # Work entries tracking & billable hours
-│   ├── invoices.html                 # Invoices manager & payment recorder
-│   ├── invoice-detail.html           # Printable invoice document & PDF export
-│   ├── tax.html                      # Indian Tax Calculator & Income Estimator
-│   ├── tax-settings.html             # Tax Slabs & Regime configuration manager
-│   └── settings.html                 # Profile, business details, backup JSON import/export
-├── css/
-│   ├── global.css                    # Design tokens, typography, buttons, status badges
-│   ├── landing.css                   # Hero, scroll reveals, geometric animations
-│   ├── auth.css                      # Auth cards & password meter bar
-│   ├── dashboard.css                 # Metric cards, grid layout, activity feed
-│   ├── clients.css                   # CRM table & client cards
-│   ├── work.css                      # Work entry logs & billable tags
-│   ├── invoices.css                  # Invoice builder & print media queries
-│   ├── tax.css                       # Tax summary breakdown
-│   ├── settings.css                 # Business profile settings & backup box
-│   └── responsive.css               # Mobile drawers & responsive layouts
-├── js/
-│   ├── core/
-│   │   ├── app.js                    # Bootstrap & global listeners
-│   │   ├── storage.js                # LocalStorage repository manager
-│   │   ├── auth.js                   # Auth guards & session state
-│   │   ├── state.js                  # Centralized event bus
-│   │   ├── utils.js                  # Indian Rupee formatting (en-IN), dates, IDs
-│   │   ├── validators.js             # Form validators & password strength engine
-│   │   ├── notifications.js          # Toast system
-│   │   └── router.js                 # Client-side relative routing helper
-│   ├── components/
-│   │   ├── sidebar.js                # App sidebar & mobile menu
-│   │   ├── header.js                 # Header & global search button
-│   │   ├── modal.js                  # Accessible modal frame
-│   │   ├── toast.js                  # Toast notification logic
-│   │   ├── table.js                  # Dynamic data table with sorting/empty states
-│   │   ├── charts.js                 # SVG revenue & invoice health charts
-│   │   ├── command-palette.js        # Cmd+K / Ctrl+K search dialog
-│   │   └── confirm-dialog.js         # Confirmation dialog modal
-│   ├── data/
-│   │   ├── demo-data.js              # Seed data for Indian freelancers
-│   │   └── tax-slabs.js              # FY 2025-26 Indian Income Tax slabs
-│   └── pages/
-│       ├── landing.js, login.js, signup.js, dashboard.js, clients.js,
-│       ├── client-detail.js, work.js, invoices.js, invoice-detail.js,
-│       └── tax.js, tax-settings.js, settings.js
-└── README.md
+
+`MONGO_DB_NAME` and `PORT` are optional. Their defaults are `freelanceledger` and `3000`. MongoDB creates the database and its `users`, `sessions`, and `workspaces` collections on first use. The server creates the required indexes and seeds the demo account once.
+
+```bash
+npm install
+npm start
 ```
+
+Visit http://localhost:3000. The demo account is `rahul@freelancedger.in` / `Password123!`, or use **Continue with Demo Account**. Signups start with an empty workspace. Data persists in MongoDB across logins and restarts.
+
+The frontend and API are served by the same Express process:
+
+- App: http://localhost:3000
+- Interactive API responses: http://localhost:3000/api-docs
+- OpenAPI JSON: http://localhost:3000/api/openapi.json
+
+The app must be served by Express: opening HTML files directly or using a separate static server will not provide API access. Existing LocalStorage workspaces and data from the former `data/ledger.json` store are not migrated automatically. Export a workspace before switching and import it through Settings. Accounts from the JSON-backed version must sign up again.
+
+## Features
+
+- Clients, billable work, invoices and payments with server-side persistence per account
+- Dashboard, tax projections, custom tax settings and activity history
+- JSON workspace export/import, print-friendly invoices and keyboard command palette
+- Password-hashed accounts and HttpOnly session cookies
+
+## API
+
+See [API.md](API.md) for endpoints, payloads, authentication and examples.
+
+Import `FreelanceLedger.postman_collection.json` into Postman for an executable API collection. Start the app with `npm start`, then use **Run collection** in its listed order. It creates a unique test account and does not modify the demo workspace.
+
+## Project layout
+
+- `server.js` — Express routes, MongoDB persistence, auth and static hosting
+- `js/core/storage.js` — browser workspace cache and API adapter
+- `js/core/auth.js` — account API client
+- `js/pages/` — page interactions
+- `pages/`, `css/`, `index.html` — UI
+- `.env` — private MongoDB connection settings (ignored by git)
+
+Run `npm test` to exercise the API with an in-memory MongoDB collection double. Tests do not access the configured cluster.
